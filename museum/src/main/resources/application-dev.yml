@@ -1,0 +1,12 @@
+# 端口号
+server:
+  port: 8100
+  context-path: /museum
+  
+spring: 
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://123.207.39.209:3306/museum?useUnicode=true&characterEncoding=utf-8
+    username: museum
+    password: zdjc@museum
