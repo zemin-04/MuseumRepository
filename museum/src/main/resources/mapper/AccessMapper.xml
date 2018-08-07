@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongda.museum.mapper.AccessMapper">
+  <resultMap id="BaseResultMap" type="com.zhongda.museum.model.Access">
+    <id column="access_id" jdbcType="INTEGER" property="accessId" />
+    <result column="openid" jdbcType="VARCHAR" property="openid" />
+    <result column="culturalrelics_id" jdbcType="INTEGER" property="culturalrelicsId" />
+    <result column="access_time" jdbcType="TIMESTAMP" property="accessTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    access_id, openid, culturalrelics_id, access_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from access
+    where access_id = #{accessId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from access
+    where access_id = #{accessId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhongda.museum.model.Access">
+    insert into access (access_id, openid, culturalrelics_id, 
+      access_time)
+    values (#{accessId,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{culturalrelicsId,jdbcType=INTEGER}, 
+      #{accessTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhongda.museum.model.Access">
+    insert into access
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="accessId != null">
+        access_id,
+      </if>
+      <if test="openid != null">
+        openid,
+      </if>
+      <if test="culturalrelicsId != null">
+        culturalrelics_id,
+      </if>
+      <if test="accessTime != null">
+        access_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="accessId != null">
+        #{accessId,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsId != null">
+        #{culturalrelicsId,jdbcType=INTEGER},
+      </if>
+      <if test="accessTime != null">
+        #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhongda.museum.model.Access">
+    update access
+    <set>
+      <if test="openid != null">
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsId != null">
+        culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER},
+      </if>
+      <if test="accessTime != null">
+        access_time = #{accessTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where access_id = #{accessId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhongda.museum.model.Access">
+    update access
+    set openid = #{openid,jdbcType=VARCHAR},
+      culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER},
+      access_time = #{accessTime,jdbcType=TIMESTAMP}
+    where access_id = #{accessId,jdbcType=INTEGER}
+  </update>
+</mapper>

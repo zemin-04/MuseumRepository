@@ -2,6 +2,8 @@ package com.zhongda.museum.controller;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -16,38 +18,38 @@ import com.zhongda.museum.model.OauthToken;
 import com.zhongda.museum.model.User;
 import com.zhongda.museum.service.UserService;
 import com.zhongda.museum.utils.HttpClientUtil;
+import com.zhongda.museum.utils.JwtTokenUtils;
 
 @Controller
 public class CommonController {
 
 	@Resource
 	private UserService userService;
+	
+	@Resource
+	private ObjectMapper objectMapper;
 
 	@RequestMapping("/home")
 	public String home(String code) throws JsonParseException,
 			JsonMappingException, IOException {
-		System.out.println("code:" + code);
 		String url = String
 				.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
 						WeiXinConfigConstant.APP_ID,
 						WeiXinConfigConstant.APP_SECRET, code);
 		String result = HttpClientUtil.httpGetRequest(url);
-		System.out.println(result);
-		ObjectMapper objectMapper = new ObjectMapper();
-		OauthToken oauthToken = objectMapper
-				.readValue(result, OauthToken.class);
+		OauthToken oauthToken = objectMapper.readValue(result, OauthToken.class);
 		User user = userService.selectByOpenid(oauthToken.getOpenid());
 		if (null == user) {
-			String url2 = String
-					.format("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN",
+			String url2 = String.format("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN",
 							oauthToken.getAccessToken(), oauthToken.getOpenid());
-			String result2 = HttpClientUtil.httpGetRequest(url2);
-			System.out.println(result2);
-			user = objectMapper.readValue(result2, User.class);
+			String userStr = HttpClientUtil.httpGetRequest(url2);
+			user = objectMapper.readValue(userStr, User.class);
 			userService.insertUser(user);
 		}
-		System.out.println(user.getNickname() + "'"
-				+ Arrays.toString(user.getPrivilege()));
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put("openid", user.getOpenid());
+		claims.put("userName", user.getNickname());
+		String token = JwtTokenUtils.createJsonWebToken(claims);
 		return "redirect:http://zjjlmp.vicp.cc:13025/";
 	}
 }
