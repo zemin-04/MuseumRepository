@@ -25,4 +25,5 @@ public class ThemeContorller {
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
 	}
+
 }
