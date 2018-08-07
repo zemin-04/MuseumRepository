@@ -1,16 +1,15 @@
 package com.zhongda.museum.constant;
 
 public class WeiXinConfigConstant {
-	
-	public static final String BASE_URL = "http://6a2ed456.ngrok.io";
-	
+
+	public static final String BASE_URL = "http://5b859ee0.ngrok.io";
+
 	public static final String HOME_URL = BASE_URL + "/museum/home";
-	
+
 	public static final String TOKEN = "museum";
-    
-	public static final String APP_ID = "wx26c4263f989aff61";
-	 
-	public static final String APP_SECRET = "056985fffa08dda72786fc8ab37006fc";
-	
-	
+
+	public static final String APP_ID = "wx1c0dbb5b637c056d";
+
+	public static final String APP_SECRET = "960b040a23766fa6606831c3c47fa496";
+
 }

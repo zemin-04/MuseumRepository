@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongda.museum.mapper.ThemeMapper">
+  <resultMap id="BaseResultMap" type="com.zhongda.museum.model.Theme">
+    <id column="theme_id" jdbcType="INTEGER" property="themeId" />
+    <result column="theme_name" jdbcType="VARCHAR" property="themeName" />
+    <result column="theme_position" jdbcType="VARCHAR" property="themePosition" />
+    <result column="theme_type" jdbcType="VARCHAR" property="themeType" />
+    <result column="theme_date" jdbcType="VARCHAR" property="themeDate" />
+    <result column="theme_sort" jdbcType="INTEGER" property="themeSort" />
+    <result column="theme_imageurl" jdbcType="VARCHAR" property="themeImageurl" />
+  </resultMap>
+  <resultMap id="TheCulMap" type="com.zhongda.museum.model.Theme">
+    <id column="theme_id" jdbcType="INTEGER" property="themeId" />
+    <result column="theme_name" jdbcType="VARCHAR" property="themeName" />
+    <result column="theme_position" jdbcType="VARCHAR" property="themePosition" />
+    <result column="theme_type" jdbcType="VARCHAR" property="themeType" />
+    <result column="theme_date" jdbcType="VARCHAR" property="themeDate" />
+    <result column="theme_sort" jdbcType="INTEGER" property="themeSort" />
+    <result column="theme_imageurl" jdbcType="VARCHAR" property="themeImageurl" />
+    <collection property="Culturalrelicss" javaType="java.util.List" ofType="com.zhongda.museum.model.Culturalrelics">
+    	<id column="culturalrelics_id" jdbcType="INTEGER" property="culturalrelicsId" />
+	    <result column="culturalrelic_themeid" jdbcType="INTEGER" property="culturalrelicThemeid" />
+	    <result column="culturalrelics_name" jdbcType="VARCHAR" property="culturalrelicsName" />
+	    <result column="culturalrelics_number" jdbcType="VARCHAR" property="culturalrelicsNumber" />
+	    <result column="culturalrelics_Introduction" jdbcType="VARCHAR" property="culturalrelicsIntroduction" />
+	    <result column="culturalrelics_imageurl" jdbcType="VARCHAR" property="culturalrelicsImageurl" />
+	    <result column="culturalrelics_musicurl" jdbcType="VARCHAR" property="culturalrelicsMusicurl" />
+	    <result column="culturalrelics_zan" jdbcType="INTEGER" property="culturalrelicsZan" />
+	    <result column="culturalrelics_access" jdbcType="INTEGER" property="culturalrelicsAccess" />
+	    <result column="culturalrelics_sort" jdbcType="INTEGER" property="culturalrelicsSort" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    theme_id, theme_name, theme_position, theme_type, theme_date, theme_sort, theme_imageurl
+  </sql>
+  <select id="selectAllTheme" resultMap="BaseResultMap">
+  	select * from theme ORDER BY theme_sort
+  </select>
+  <select id="selectCulreliBuThemeId" resultMap="TheCulMap">
+  	select * from theme t LEFT JOIN culturalrelics cu  on t.theme_id=cu.culturalrelic_themeid where theme_id =#{themeId,jdbcType=INTEGER} ORDER BY cu.culturalrelics_sort desc
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from theme
+    where theme_id = #{themeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from theme
+    where theme_id = #{themeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhongda.museum.model.Theme">
+    insert into theme (theme_id, theme_name, theme_position, 
+      theme_type, theme_date, theme_sort, 
+      theme_imageurl)
+    values (#{themeId,jdbcType=INTEGER}, #{themeName,jdbcType=VARCHAR}, #{themePosition,jdbcType=VARCHAR}, 
+      #{themeType,jdbcType=VARCHAR}, #{themeDate,jdbcType=VARCHAR}, #{themeSort,jdbcType=INTEGER}, 
+      #{themeImageurl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhongda.museum.model.Theme">
+    insert into theme
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="themeId != null">
+        theme_id,
+      </if>
+      <if test="themeName != null">
+        theme_name,
+      </if>
+      <if test="themePosition != null">
+        theme_position,
+      </if>
+      <if test="themeType != null">
+        theme_type,
+      </if>
+      <if test="themeDate != null">
+        theme_date,
+      </if>
+      <if test="themeSort != null">
+        theme_sort,
+      </if>
+      <if test="themeImageurl != null">
+        theme_imageurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="themeId != null">
+        #{themeId,jdbcType=INTEGER},
+      </if>
+      <if test="themeName != null">
+        #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="themePosition != null">
+        #{themePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="themeType != null">
+        #{themeType,jdbcType=VARCHAR},
+      </if>
+      <if test="themeDate != null">
+        #{themeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="themeSort != null">
+        #{themeSort,jdbcType=INTEGER},
+      </if>
+      <if test="themeImageurl != null">
+        #{themeImageurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhongda.museum.model.Theme">
+    update theme
+    <set>
+      <if test="themeName != null">
+        theme_name = #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="themePosition != null">
+        theme_position = #{themePosition,jdbcType=VARCHAR},
+      </if>
+      <if test="themeType != null">
+        theme_type = #{themeType,jdbcType=VARCHAR},
+      </if>
+      <if test="themeDate != null">
+        theme_date = #{themeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="themeSort != null">
+        theme_sort = #{themeSort,jdbcType=INTEGER},
+      </if>
+      <if test="themeImageurl != null">
+        theme_imageurl = #{themeImageurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where theme_id = #{themeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhongda.museum.model.Theme">
+    update theme
+    set theme_name = #{themeName,jdbcType=VARCHAR},
+      theme_position = #{themePosition,jdbcType=VARCHAR},
+      theme_type = #{themeType,jdbcType=VARCHAR},
+      theme_date = #{themeDate,jdbcType=VARCHAR},
+      theme_sort = #{themeSort,jdbcType=INTEGER},
+      theme_imageurl = #{themeImageurl,jdbcType=VARCHAR}
+    where theme_id = #{themeId,jdbcType=INTEGER}
+  </update>
+</mapper>

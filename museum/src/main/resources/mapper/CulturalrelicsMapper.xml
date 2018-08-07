@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhongda.museum.mapper.CulturalrelicsMapper">
+  <resultMap id="BaseResultMap" type="com.zhongda.museum.model.Culturalrelics">
+    <id column="culturalrelics_id" jdbcType="INTEGER" property="culturalrelicsId" />
+    <result column="culturalrelic_themeid" jdbcType="INTEGER" property="culturalrelicThemeid" />
+    <result column="culturalrelics_name" jdbcType="VARCHAR" property="culturalrelicsName" />
+    <result column="culturalrelics_number" jdbcType="VARCHAR" property="culturalrelicsNumber" />
+    <result column="culturalrelics_Introduction" jdbcType="VARCHAR" property="culturalrelicsIntroduction" />
+    <result column="culturalrelics_imageurl" jdbcType="VARCHAR" property="culturalrelicsImageurl" />
+    <result column="culturalrelics_musicurl" jdbcType="VARCHAR" property="culturalrelicsMusicurl" />
+    <result column="culturalrelics_zan" jdbcType="INTEGER" property="culturalrelicsZan" />
+    <result column="culturalrelics_access" jdbcType="INTEGER" property="culturalrelicsAccess" />
+    <result column="culturalrelics_sort" jdbcType="INTEGER" property="culturalrelicsSort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    culturalrelics_id, culturalrelic_themeid, culturalrelics_name, culturalrelics_number, 
+    culturalrelics_Introduction, culturalrelics_imageurl, culturalrelics_musicurl, culturalrelics_zan, 
+    culturalrelics_access, culturalrelics_sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from culturalrelics
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from culturalrelics
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zhongda.museum.model.Culturalrelics">
+    insert into culturalrelics (culturalrelics_id, culturalrelic_themeid, 
+      culturalrelics_name, culturalrelics_number, 
+      culturalrelics_Introduction, culturalrelics_imageurl, 
+      culturalrelics_musicurl, culturalrelics_zan, 
+      culturalrelics_access, culturalrelics_sort
+      )
+    values (#{culturalrelicsId,jdbcType=INTEGER}, #{culturalrelicThemeid,jdbcType=INTEGER}, 
+      #{culturalrelicsName,jdbcType=VARCHAR}, #{culturalrelicsNumber,jdbcType=VARCHAR}, 
+      #{culturalrelicsIntroduction,jdbcType=VARCHAR}, #{culturalrelicsImageurl,jdbcType=VARCHAR}, 
+      #{culturalrelicsMusicurl,jdbcType=VARCHAR}, #{culturalrelicsZan,jdbcType=INTEGER}, 
+      #{culturalrelicsAccess,jdbcType=INTEGER}, #{culturalrelicsSort,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhongda.museum.model.Culturalrelics">
+    insert into culturalrelics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="culturalrelicsId != null">
+        culturalrelics_id,
+      </if>
+      <if test="culturalrelicThemeid != null">
+        culturalrelic_themeid,
+      </if>
+      <if test="culturalrelicsName != null">
+        culturalrelics_name,
+      </if>
+      <if test="culturalrelicsNumber != null">
+        culturalrelics_number,
+      </if>
+      <if test="culturalrelicsIntroduction != null">
+        culturalrelics_Introduction,
+      </if>
+      <if test="culturalrelicsImageurl != null">
+        culturalrelics_imageurl,
+      </if>
+      <if test="culturalrelicsMusicurl != null">
+        culturalrelics_musicurl,
+      </if>
+      <if test="culturalrelicsZan != null">
+        culturalrelics_zan,
+      </if>
+      <if test="culturalrelicsAccess != null">
+        culturalrelics_access,
+      </if>
+      <if test="culturalrelicsSort != null">
+        culturalrelics_sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="culturalrelicsId != null">
+        #{culturalrelicsId,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicThemeid != null">
+        #{culturalrelicThemeid,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsName != null">
+        #{culturalrelicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsNumber != null">
+        #{culturalrelicsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsIntroduction != null">
+        #{culturalrelicsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsImageurl != null">
+        #{culturalrelicsImageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsMusicurl != null">
+        #{culturalrelicsMusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsZan != null">
+        #{culturalrelicsZan,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsAccess != null">
+        #{culturalrelicsAccess,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsSort != null">
+        #{culturalrelicsSort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhongda.museum.model.Culturalrelics">
+    update culturalrelics
+    <set>
+      <if test="culturalrelicThemeid != null">
+        culturalrelic_themeid = #{culturalrelicThemeid,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsName != null">
+        culturalrelics_name = #{culturalrelicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsNumber != null">
+        culturalrelics_number = #{culturalrelicsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsIntroduction != null">
+        culturalrelics_Introduction = #{culturalrelicsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsImageurl != null">
+        culturalrelics_imageurl = #{culturalrelicsImageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsMusicurl != null">
+        culturalrelics_musicurl = #{culturalrelicsMusicurl,jdbcType=VARCHAR},
+      </if>
+      <if test="culturalrelicsZan != null">
+        culturalrelics_zan = #{culturalrelicsZan,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsAccess != null">
+        culturalrelics_access = #{culturalrelicsAccess,jdbcType=INTEGER},
+      </if>
+      <if test="culturalrelicsSort != null">
+        culturalrelics_sort = #{culturalrelicsSort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhongda.museum.model.Culturalrelics">
+    update culturalrelics
+    set culturalrelic_themeid = #{culturalrelicThemeid,jdbcType=INTEGER},
+      culturalrelics_name = #{culturalrelicsName,jdbcType=VARCHAR},
+      culturalrelics_number = #{culturalrelicsNumber,jdbcType=VARCHAR},
+      culturalrelics_Introduction = #{culturalrelicsIntroduction,jdbcType=VARCHAR},
+      culturalrelics_imageurl = #{culturalrelicsImageurl,jdbcType=VARCHAR},
+      culturalrelics_musicurl = #{culturalrelicsMusicurl,jdbcType=VARCHAR},
+      culturalrelics_zan = #{culturalrelicsZan,jdbcType=INTEGER},
+      culturalrelics_access = #{culturalrelicsAccess,jdbcType=INTEGER},
+      culturalrelics_sort = #{culturalrelicsSort,jdbcType=INTEGER}
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </update>
+</mapper>
