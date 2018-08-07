@@ -4,6 +4,6 @@ import com.zhongda.museum.model.Culturalrelics;
 
 public interface CulturalrelicsService {
 
-	Culturalrelics selectculturalrelicsBuId(Integer culturalrelicsId);
+	Culturalrelics selectculturalrelicsById(Integer culturalrelicsId);
 
 }

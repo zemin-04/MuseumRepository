@@ -21,10 +21,9 @@ public interface CulturalrelicsMapper {
 
 	/**
 	 * 通过ID查询文物
-	 * 
 	 * @param culturalrelicsId
 	 * @return
 	 */
-	Culturalrelics selectculturalrelicsBuId(
+	Culturalrelics selectculturalrelicsById(
 			@Param(value = "culturalrelicsId") Integer culturalrelicsId);
 }

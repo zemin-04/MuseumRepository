@@ -15,8 +15,8 @@ public class CulturalrelicsServiceImpl implements CulturalrelicsService {
 	private CulturalrelicsMapper culturalrelicsMapper;
 
 	@Override
-	public Culturalrelics selectculturalrelicsBuId(Integer culturalrelicsId) {
-		return culturalrelicsMapper.selectculturalrelicsBuId(culturalrelicsId);
+	public Culturalrelics selectculturalrelicsById(Integer culturalrelicsId) {
+		return culturalrelicsMapper.selectculturalrelicsById(culturalrelicsId);
 	}
 
 }

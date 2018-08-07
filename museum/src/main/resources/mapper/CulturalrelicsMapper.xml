@@ -18,7 +18,7 @@
     culturalrelics_Introduction, culturalrelics_imageurl, culturalrelics_musicurl, culturalrelics_zan, 
     culturalrelics_access, culturalrelics_sort
   </sql>
-  <select id="selectculturalrelicsBuId" resultMap="BaseResultMap">
+  <select id="selectculturalrelicsById" resultMap="BaseResultMap">
   	select * from culturalrelics where culturalrelics_id=#{culturalrelicsId,jdbcType=INTEGER}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
