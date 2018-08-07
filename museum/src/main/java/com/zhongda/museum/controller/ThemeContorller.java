@@ -1,5 +1,10 @@
 package com.zhongda.museum.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,17 +16,22 @@ import com.zhongda.museum.model.Theme;
 import com.zhongda.museum.service.ThemeService;
 
 @RestController
+@RequestMapping("/theme")
+@Api(tags = { "主题操作接口" })
 public class ThemeContorller {
 
 	@Resource
 	private ThemeService themeService;
 
 	@RequestMapping("/allTheme")
+	@ApiOperation(value = "查询所有展厅", httpMethod = "GET", response = List.class, notes = "查询所有展厅")
 	public List<Theme> allTheme() {
 		return themeService.selectAllTheme();
 	}
 
 	@RequestMapping("/themeCul")
+	@ApiOperation(value = "查询展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "根据展厅id查询展厅下的所有文物")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "themeId", value = "展厅id", required = true, dataType = "Integer", paramType = "query") })
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
 	}

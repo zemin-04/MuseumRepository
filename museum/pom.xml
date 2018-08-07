@@ -72,6 +72,13 @@
             <version>1.4.0</version>
         </dependency>
 		<!-- shiro end -->
+		<!-- JWT start (Token机制) -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.0</version>
+		</dependency>
+		<!-- JWT end -->
 		<!-- joda start (时间日期计算工具) -->
 		<dependency>
 		    <groupId>joda-time</groupId>
@@ -100,6 +107,19 @@
 		    <version>3.5</version>
 		</dependency>
 		<!-- commons-lang3 end -->
+		
+		<!-- swagger start (构建Restful API文档) -->
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.7.0</version>
+		</dependency>
+		<!-- swagger end -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
