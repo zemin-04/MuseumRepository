@@ -9,7 +9,7 @@ import com.zhongda.museum.model.menu.Button;
 import com.zhongda.museum.model.menu.CommonButton;
 import com.zhongda.museum.model.menu.ComplexButton;
 import com.zhongda.museum.model.menu.Menu;
-import com.zhongda.museum.utils.WeiXinUtil;
+import com.zhongda.museum.utils.WeiXinUtils;
 
 @Component
 public class TokenCommandRunner implements CommandLineRunner {
@@ -17,13 +17,13 @@ public class TokenCommandRunner implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		// 获取accessToken
-		WeiXinUtil.accessToken = getAccessToken();
+		WeiXinUtils.accessToken = getAccessToken();
 		// 自定义菜单
 		CommonButton btn = new CommonButton();
 		btn.setName("语音导览");
 		btn.setType("view");
-		String oauth_url = String.format("https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect", WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.HOME_URL);
-		System.out.println(oauth_url);
+		String oauth_url = String.format(WeiXinConfigConstant.GET_CODE_Y_URL, WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.HOME_URL);
+		System.out.println("oauth_url:" + oauth_url);
 		btn.setUrl(oauth_url);
 
 		ComplexButton mainBtn = new ComplexButton();
@@ -33,7 +33,7 @@ public class TokenCommandRunner implements CommandLineRunner {
 		Menu menu = new Menu();
 		menu.setButton(new Button[] { mainBtn });
 
-		WeiXinUtil.createMenu(menu);
+		WeiXinUtils.createMenu(menu);
 	}
 
 	/**
@@ -42,11 +42,11 @@ public class TokenCommandRunner implements CommandLineRunner {
 	 * @return
 	 */
 	private AccessToken getAccessToken() {
-		AccessToken token = WeiXinUtil.getAccessToken();
+		AccessToken token = WeiXinUtils.getAccessToken();
 		while (null == token) {
 			try {
 				Thread.sleep(1000);
-				token = WeiXinUtil.getAccessToken();
+				token = WeiXinUtils.getAccessToken();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

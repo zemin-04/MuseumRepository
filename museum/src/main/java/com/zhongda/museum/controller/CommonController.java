@@ -1,55 +1,43 @@
 package com.zhongda.museum.controller;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.PrintWriter;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhongda.museum.constant.WeiXinConfigConstant;
-import com.zhongda.museum.model.OauthToken;
-import com.zhongda.museum.model.User;
-import com.zhongda.museum.service.UserService;
-import com.zhongda.museum.utils.HttpClientUtil;
-import com.zhongda.museum.utils.JwtTokenUtils;
+import com.zhongda.museum.utils.WeiXinUtils;
 
-@Controller
+@RestController
 public class CommonController {
-
-	@Resource
-	private UserService userService;
 	
-	@Resource
-	private ObjectMapper objectMapper;
-
-	@RequestMapping("/home")
-	public String home(String code) throws JsonParseException,
-			JsonMappingException, IOException {
-		String url = String
-				.format("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-						WeiXinConfigConstant.APP_ID,
-						WeiXinConfigConstant.APP_SECRET, code);
-		String result = HttpClientUtil.httpGetRequest(url);
-		OauthToken oauthToken = objectMapper.readValue(result, OauthToken.class);
-		User user = userService.selectByOpenid(oauthToken.getOpenid());
-		if (null == user) {
-			String url2 = String.format("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN",
-							oauthToken.getAccessToken(), oauthToken.getOpenid());
-			String userStr = HttpClientUtil.httpGetRequest(url2);
-			user = objectMapper.readValue(userStr, User.class);
-			userService.insertUser(user);
-		}
-		Map<String, Object> claims = new HashMap<String, Object>();
-		claims.put("openid", user.getOpenid());
-		claims.put("userName", user.getNickname());
-		String token = JwtTokenUtils.createJsonWebToken(claims);
-		return "redirect:http://zjjlmp.vicp.cc:13025/";
+	private static Logger logger = LoggerFactory.getLogger(CommonController.class);
+	 
+	/**
+	 * 微信消息接收和token验证(验证消息来源是否是微信服务器)
+	 * @param signature 微信加密签名
+	 * @param timestamp 时间戳
+	 * @param nonce 随机数
+	 * @param echostr 随机字符串
+	 * @param response 
+	 * @throws IOException
+	 */
+	@GetMapping("/checkToken")
+    public void validToken( String signature, String timestamp, String nonce, String echostr, HttpServletResponse response) throws IOException{
+        PrintWriter print = null;
+        logger.info("开始签名校验");
+        // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
+        if (signature != null && WeiXinUtils.checkSignature(signature, timestamp, nonce)) {
+        	logger.info("签名校验通过。");
+        	print = response.getWriter();
+            print.write(echostr);//如果检验成功输出echostr，微信服务器接收到此输出，才会确认检验完成。
+            print.flush();
+        }else{
+        	 logger.error("签名校验失败。");
+        }
 	}
 }

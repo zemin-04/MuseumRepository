@@ -16,6 +16,12 @@
     from thumb_up
     where thumb_up_id = #{thumbUpId,jdbcType=INTEGER}
   </select>
+  <select id="selectByOpenidAndCulturalrelicsId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from thumb_up
+    where openid = #{openid,jdbcType=VARCHAR} and culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from thumb_up
     where thumb_up_id = #{thumbUpId,jdbcType=INTEGER}

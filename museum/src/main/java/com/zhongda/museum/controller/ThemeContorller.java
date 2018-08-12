@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,17 +24,16 @@ public class ThemeContorller {
 	@Resource
 	private ThemeService themeService;
 
-	@RequestMapping("/allTheme")
+	@GetMapping("/allTheme")
 	@ApiOperation(value = "查询所有展厅", httpMethod = "GET", response = List.class, notes = "查询所有展厅")
 	public List<Theme> allTheme() {
 		return themeService.selectAllTheme();
 	}
 
-	@RequestMapping("/themeCul")
+	@GetMapping("/themeCul")
 	@ApiOperation(value = "查询展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "根据展厅id查询展厅下的所有文物")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "themeId", value = "展厅id", required = true, dataType = "Integer", paramType = "query") })
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
 	}
-
 }

@@ -25,7 +25,7 @@ public class JwtTokenUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtils.class);
 
 	/** Token加密密钥(本地类中) */
-	private static final String JWT_SECRET = "ZhangJiaJieMuseum";
+	private static final String JWT_SECRET = "Museum";
 	/** Token默认过期时间7天(单位毫秒) */
 	private static final int JWT_EXP = 7 * 24 * 60 * 60 * 1000;
 	

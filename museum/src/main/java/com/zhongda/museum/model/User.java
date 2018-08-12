@@ -22,8 +22,16 @@ public class User {
     private String[] privilege;
 
     private String unionid;
+    
+    public User() {
+	}
+    
+    public User(String openid, String nickname) {
+		this.openid = openid;
+		this.nickname = nickname;
+	}
 
-    public Integer getUserid() {
+	public Integer getUserid() {
         return userid;
     }
 

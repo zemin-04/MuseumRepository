@@ -4,7 +4,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.zhongda.museum.model.AccessToken;
-import com.zhongda.museum.utils.WeiXinUtil;
+import com.zhongda.museum.utils.WeiXinUtils;
 
 @Component
 public class TokenTask {
@@ -16,7 +16,7 @@ public class TokenTask {
      */
 	@Scheduled(cron = "0 0 0/3 * * ?")
 	public void getAccessTokenA(){
-		WeiXinUtil.accessToken = getAccessToken();
+		WeiXinUtils.accessToken = getAccessToken();
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class TokenTask {
 	 */
 	@Scheduled(cron = "0 30 1/3 * * ?")
 	public void getAccessTokenB(){
-		WeiXinUtil.accessToken = getAccessToken();
+		WeiXinUtils.accessToken = getAccessToken();
 	}
 	
 	/**
@@ -33,11 +33,11 @@ public class TokenTask {
 	 * @return
 	 */
 	private AccessToken getAccessToken() {
-		AccessToken token = WeiXinUtil.getAccessToken();
+		AccessToken token = WeiXinUtils.getAccessToken();
 		while(null == token){
 			try {
 				Thread.sleep(1000);
-				token = WeiXinUtil.getAccessToken();
+				token = WeiXinUtils.getAccessToken();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

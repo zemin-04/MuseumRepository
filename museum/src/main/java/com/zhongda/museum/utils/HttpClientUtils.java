@@ -58,9 +58,9 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HttpClientUtil {
+public class HttpClientUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(HttpClientUtils.class);
 
     private static final int CONNECT_TIMEOUT = 5000;//设置超时毫秒数
 
@@ -255,7 +255,7 @@ public class HttpClientUtil {
             if(entity != null) {
                 Charset responseCharset  = ContentType.getOrDefault(entity).getCharset();
                 responseContent = EntityUtils.toString(entity, responseCharset);
-                responseContent = new String(responseContent.getBytes(Charset.forName("ISO-8859-1")));
+                responseContent = new String(responseContent.getBytes(Charset.forName("UTF-8")));
                 EntityUtils.consume(entity);
             }
         } catch(ConnectTimeoutException cte) {

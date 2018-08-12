@@ -10,8 +10,17 @@ public class ThumbUp {
     private Integer culturalrelicsId;
 
     private Date thumbUpTime;
+    
+    public ThumbUp(){
+    }
+    
+    public ThumbUp(String openid, Integer culturalrelicsId) {
+		this.openid = openid;
+		this.culturalrelicsId = culturalrelicsId;
+		this.thumbUpTime = new Date();
+	}
 
-    public Integer getThumbUpId() {
+	public Integer getThumbUpId() {
         return thumbUpId;
     }
 

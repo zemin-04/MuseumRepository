@@ -13,9 +13,9 @@ import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PaserXmlUtil {
+public class PaserXmlUtils {
 	
-	private static Logger logger = LoggerFactory.getLogger(PaserXmlUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(PaserXmlUtils.class);
 	
 	public static Map<String, String> parseXml(InputStream inputStream) throws Exception { 
 		// 将解析结果存储在HashMap中

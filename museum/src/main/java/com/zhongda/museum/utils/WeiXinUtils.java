@@ -1,5 +1,6 @@
 package com.zhongda.museum.utils;
 
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -11,11 +12,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhongda.museum.constant.WeiXinConfigConstant;
 import com.zhongda.museum.model.AccessToken;
+import com.zhongda.museum.model.OauthToken;
+import com.zhongda.museum.model.User;
 import com.zhongda.museum.model.menu.Menu;
 
-public class WeiXinUtil {
+public class WeiXinUtils {
 	
-	private static Logger logger = LoggerFactory.getLogger(WeiXinUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(WeiXinUtils.class);
+	
+	private static ObjectMapper objectMapper = SpringUtils.getBean(ObjectMapper.class);
     // 与接口配置信息中的Token要一致
     public static AccessToken accessToken = null;
  
@@ -30,18 +35,16 @@ public class WeiXinUtil {
         String[] array = new String[] { WeiXinConfigConstant.TOKEN, timestamp, nonce };
         // 将token、timestamp、nonce三个参数进行字典序排序
         Arrays.sort(array);  
-
         StringBuilder content = new StringBuilder();
         for(String str : array) {
         	content.append(str);
         }
-        
         String tmpStr = null;
         try {
         	MessageDigest md = MessageDigest.getInstance("SHA-1");
             // 将三个参数字符串拼接成一个字符串进行sha1加密
             byte[] digest = md.digest(content.toString().getBytes());
-            tmpStr = byteToStr(digest);
+            tmpStr = CodeUtils.byteToStr(digest);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -51,45 +54,17 @@ public class WeiXinUtil {
     }
  
     /**
-     * 将字节数组转换为十六进制字符串
-     * @param byteArray
-     * @return
-     */
-    private static String byteToStr(byte[] byteArray) {
-        String strDigest = "";
-        for (int i = 0; i < byteArray.length; i++) {
-            strDigest += byteToHexStr(byteArray[i]);
-        }
-        return strDigest;
-    }
- 
-    /**
-     * 将字节转换为十六进制字符串
-     * @param mByte
-     * @return
-     */
-    private static String byteToHexStr(byte mByte) {
-        char[] Digit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-        char[] tempArr = new char[2];
-        tempArr[0] = Digit[(mByte >>> 4) & 0X0F];
-        tempArr[1] = Digit[mByte & 0X0F];
-        String s = new String(tempArr);
-        return s;
-    }
-    
-    /**
 	 * 获取微信access_token
 	 * @return
 	 */
 	public static AccessToken getAccessToken() {
-		String Url = String.format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s", WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET);
-        String result = HttpClientUtil.httpGetRequest(Url);
+		String url = String.format(WeiXinConfigConstant.GET_ACCESS_TOKEN_URL, WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET);
+        String result = HttpClientUtils.httpGetRequest(url);
         logger.info(result);
-        ObjectMapper mapper = new ObjectMapper();
         AccessToken token = null;
 		try {
-			token = mapper.readValue(result, AccessToken.class);
-		} catch (Exception e) {
+			token = objectMapper.readValue(result, AccessToken.class);
+		} catch (IOException e) {
 			e.printStackTrace();
 		} 
         return token;
@@ -103,15 +78,48 @@ public class WeiXinUtil {
 		if(null == accessToken){
 			accessToken = getAccessToken();
 		}
-		String url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + accessToken.getAccessToken();
-		ObjectMapper mapper = new ObjectMapper();
+		String url = String.format(WeiXinConfigConstant.CREATE_MENU_URL, accessToken.getAccessToken());
 		String jsonData = null;
 		try {
-			jsonData = mapper.writeValueAsString(menu);
-			String result = HttpClientUtil.httpPostRequest(url, jsonData);
+			jsonData = objectMapper.writeValueAsString(menu);
+			String result = HttpClientUtils.httpPostRequest(url, jsonData);
 			logger.info(result);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 获取微信oauth_token
+	 * @param code
+	 * @return
+	 */
+	public static OauthToken getOauthToken(String code) {
+		String url = String.format(WeiXinConfigConstant.GET_OAUTH_TOKEN_URL, WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET, code);
+		String result = HttpClientUtils.httpGetRequest(url);
+		OauthToken oauthToken = null;
+		try {
+			oauthToken = objectMapper.readValue(result, OauthToken.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		return oauthToken;
+	}
+	
+	/**
+	 * 获取微信用户信息
+	 * @param oauthToken
+	 * @return
+	 */
+	public static User getUserInfo(OauthToken oauthToken) {
+		String url = String.format(WeiXinConfigConstant.GET_USER_INFO_URL, oauthToken.getAccessToken(), oauthToken.getOpenid());
+		String result = HttpClientUtils.httpGetRequest(url);
+		User user = null;
+		try {
+			user = objectMapper.readValue(result, User.class);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return user;
 	}
 }

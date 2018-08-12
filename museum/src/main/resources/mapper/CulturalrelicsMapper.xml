@@ -18,9 +18,6 @@
     culturalrelics_Introduction, culturalrelics_imageurl, culturalrelics_musicurl, culturalrelics_zan, 
     culturalrelics_access, culturalrelics_sort
   </sql>
-  <select id="selectculturalrelicsById" resultMap="BaseResultMap">
-  	select * from culturalrelics where culturalrelics_id=#{culturalrelicsId,jdbcType=INTEGER}
-  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -156,6 +153,21 @@
       culturalrelics_zan = #{culturalrelicsZan,jdbcType=INTEGER},
       culturalrelics_access = #{culturalrelicsAccess,jdbcType=INTEGER},
       culturalrelics_sort = #{culturalrelicsSort,jdbcType=INTEGER}
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateAccessByCulturalrelicsId" parameterType="java.lang.Integer">
+    update culturalrelics
+    set culturalrelics_access = culturalrelics_access + 1
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </update>
+  <update id="updatePlusThumbUpByCulturalrelicsId" parameterType="java.lang.Integer">
+    update culturalrelics
+    set culturalrelics_zan = culturalrelics_zan + 1
+    where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateMinusThumbUpByCulturalrelicsId" parameterType="java.lang.Integer">
+    update culturalrelics
+    set culturalrelics_zan = culturalrelics_zan - 1
     where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,7 +1,10 @@
 package com.zhongda.museum.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.zhongda.museum.model.Access;
 
+@Mapper
 public interface AccessMapper {
     int deleteByPrimaryKey(Integer accessId);
 

@@ -10,8 +10,17 @@ public class Access {
     private Integer culturalrelicsId;
 
     private Date accessTime;
+    
+    public Access(){
+    }
+    
+    public Access(String openid, Integer culturalrelicsId) {
+		this.openid = openid;
+		this.culturalrelicsId = culturalrelicsId;
+		this.accessTime = new Date();
+	}
 
-    public Integer getAccessId() {
+	public Integer getAccessId() {
         return accessId;
     }
 
