@@ -1,5 +1,7 @@
 package com.zhongda.museum.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ public class CulturalrelicsServiceImpl implements CulturalrelicsService {
 	public Culturalrelics findCulturalrelics(Integer culturalrelicsId) {
 		return culturalrelicsMapper.selectByPrimaryKey(culturalrelicsId);
 	}
-	
+
 	@Transactional
 	@Override
 	public boolean plusAccess(String openid, Integer culturalrelicsId) {
@@ -36,29 +38,45 @@ public class CulturalrelicsServiceImpl implements CulturalrelicsService {
 		accessMapper.insertSelective(access);
 		return true;
 	}
-	
+
 	@Transactional
 	@Override
 	public boolean plusThumbUp(String openid, Integer culturalrelicsId) {
-		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(openid, culturalrelicsId);
-		if(null == thumbUp){
-			culturalrelicsMapper.updatePlusThumbUpByCulturalrelicsId(culturalrelicsId);
+		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(
+				openid, culturalrelicsId);
+		if (null == thumbUp) {
+			culturalrelicsMapper
+					.updatePlusThumbUpByCulturalrelicsId(culturalrelicsId);
 			thumbUp = new ThumbUp(openid, culturalrelicsId);
 			thumbUpMapper.insertSelective(thumbUp);
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Transactional
 	@Override
 	public boolean minusThumbUp(String openid, Integer culturalrelicsId) {
-		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(openid, culturalrelicsId);
-		if(null != thumbUp){
-			culturalrelicsMapper.updateMinusThumbUpByCulturalrelicsId(culturalrelicsId);
+		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(
+				openid, culturalrelicsId);
+		if (null != thumbUp) {
+			culturalrelicsMapper
+					.updateMinusThumbUpByCulturalrelicsId(culturalrelicsId);
 			thumbUpMapper.deleteByPrimaryKey(thumbUp.getThumbUpId());
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Culturalrelics> selectCulturalrelicsLikecondition(
+			String condition) {
+		return culturalrelicsMapper
+				.selectCulturalrelicsLikecondition(condition);
+	}
+
+	@Override
+	public List<Culturalrelics> selectculturalrelicsByThemeId(Integer themeId) {
+		return culturalrelicsMapper.selectculturalrelicsByThemeId(themeId);
 	}
 }

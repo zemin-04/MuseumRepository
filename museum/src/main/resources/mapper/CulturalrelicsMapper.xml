@@ -18,6 +18,15 @@
     culturalrelics_Introduction, culturalrelics_imageurl, culturalrelics_musicurl, culturalrelics_zan, 
     culturalrelics_access, culturalrelics_sort
   </sql>
+  <select id="selectculturalrelicsById" resultMap="BaseResultMap">
+  	select * from culturalrelics where culturalrelics_id=#{culturalrelicsId,jdbcType=INTEGER}
+  </select>
+  <select id="selectCulturalrelicsLikecondition" resultMap="BaseResultMap">
+  	select * from culturalrelics where culturalrelics_name like concat('%',#{condition,jdbcType=VARCHAR},'%') || culturalrelics_number like concat('%',#{condition,jdbcType=VARCHAR},'%')
+  </select>
+  <select id="selectculturalrelicsByThemeId" resultMap="BaseResultMap">
+  	select * from culturalrelics where culturalrelic_themeid=#{themeId,jdbcType=INTEGER} ORDER BY culturalrelics_sort DESC
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

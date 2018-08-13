@@ -1,5 +1,7 @@
 package com.zhongda.museum.service;
 
+import java.util.List;
+
 import com.zhongda.museum.model.Culturalrelics;
 
 public interface CulturalrelicsService {
@@ -34,5 +36,21 @@ public interface CulturalrelicsService {
 	 * @return
 	 */
 	boolean minusThumbUp(String openid, Integer culturalrelicsId);
+
+	/**
+	 * 搜索符合条件的文物
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	List<Culturalrelics> selectCulturalrelicsLikecondition(String condition);
+
+	/**
+	 * 查询展厅下的文物
+	 * 
+	 * @param themeId
+	 * @return
+	 */
+	List<Culturalrelics> selectculturalrelicsByThemeId(Integer themeId);
 
 }
