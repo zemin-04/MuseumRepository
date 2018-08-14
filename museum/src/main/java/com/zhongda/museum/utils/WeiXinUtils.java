@@ -1,10 +1,6 @@
 package com.zhongda.museum.utils;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,38 +24,6 @@ public class WeiXinUtils {
 	public static AccessToken accessToken = null;
 
 	/**
-	 * 验证签名
-	 * 
-	 * @param signature
-	 * @param timestamp
-	 * @param nonce
-	 * @return
-	 */
-	public static boolean checkSignature(String signature, String timestamp,
-			String nonce) {
-		String[] array = new String[] { WeiXinConfigConstant.TOKEN, timestamp,
-				nonce };
-		// 将token、timestamp、nonce三个参数进行字典序排序
-		Arrays.sort(array);
-		StringBuilder content = new StringBuilder();
-		for (String str : array) {
-			content.append(str);
-		}
-		String tmpStr = null;
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-1");
-			// 将三个参数字符串拼接成一个字符串进行sha1加密
-			byte[] digest = md.digest(content.toString().getBytes());
-			tmpStr = CodeUtils.byteToStr(digest);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		content = null;
-		// 将sha1加密后的字符串可与signature对比，标识该请求来源于微信
-		return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
-	}
-
-	/**
 	 * 获取微信access_token
 	 * 
 	 * @return
@@ -68,7 +32,6 @@ public class WeiXinUtils {
 		String url = String.format(WeiXinConfigConstant.GET_ACCESS_TOKEN_URL,
 				WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET);
 		String result = HttpClientUtils.httpGetRequest(url);
-		logger.info(result);
 		AccessToken token = null;
 		try {
 			token = objectMapper.readValue(result, AccessToken.class);
@@ -138,21 +101,25 @@ public class WeiXinUtils {
 		}
 		return user;
 	}
-
-	public static Map<String, String> getJsapiTicket(String signUrl) {
-		String url = String.format(WeiXinConfigConstant.GRT_JSAPI_TICKET,
+	
+	/**
+	 * 获取微信JS API 的Ticket
+	 * @param signUrl
+	 * @return
+	 */
+	public static JsapiTicket getJsapiTicket() {
+		if (null == accessToken) {
+			accessToken = getAccessToken();
+		}
+		String url = String.format(WeiXinConfigConstant.GET_JSAPI_TICKET_URL,
 				accessToken.getAccessToken());
-		System.out.println("url:" + url);
 		String result = HttpClientUtils.httpGetRequest(url);
-		System.out.println("jsapi_ticket：" + result);
 		JsapiTicket jsapiTicket = null;
-		Map<String, String> sign = null;
 		try {
 			jsapiTicket = objectMapper.readValue(result, JsapiTicket.class);
-			sign = Sign.sign(jsapiTicket.getTicket(), signUrl);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return sign;
+		return jsapiTicket;
 	}
 }

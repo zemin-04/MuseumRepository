@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhongda.museum.model.JsapiTicket;
 import com.zhongda.museum.model.Theme;
 import com.zhongda.museum.service.ThemeService;
+import com.zhongda.museum.utils.SignUtils;
 import com.zhongda.museum.utils.WeiXinUtils;
 
 @RestController
@@ -40,8 +42,10 @@ public class ThemeContorller {
 	}
 
 	@GetMapping("/test")
-	@ApiOperation(value = "查询展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "根据展厅id查询展厅下的所有文物")
+	@ApiOperation(value = "获取对应url的签名信息", httpMethod = "GET", response = Map.class, notes = "获取对应url的签名信息")
 	public Map<String, String> test(String url) {
-		return WeiXinUtils.getJsapiTicket(url);
+		JsapiTicket jsapiTicket = WeiXinUtils.getJsapiTicket();
+		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(), url);
+		return result;
 	}
 }

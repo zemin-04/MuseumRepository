@@ -39,7 +39,12 @@ public class OauthController {
 		claims.put("userName", user.getNickname());
 		String jwtToken = JwtTokenUtils.createJsonWebToken(claims);
 		logger.info(jwtToken);
-		return "redirect:http://zjjlmp.vicp.cc:13460?"
+		return "redirect:http://zhdtepp.zdjcyun-iot.com:3000?"
 				+ TokenUtils.DEFAULT_TOKEN_NAME + "=" + jwtToken;
+	}
+	
+	@RequestMapping("/test")
+	public String Test() {
+		return "index";
 	}
 }

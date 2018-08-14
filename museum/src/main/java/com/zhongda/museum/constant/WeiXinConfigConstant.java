@@ -2,9 +2,9 @@ package com.zhongda.museum.constant;
 
 public class WeiXinConfigConstant {
 
-	public static final String APP_ID = "wx1c0dbb5b637c056d";
+	public static final String APP_ID = "wx26c4263f989aff61";//"wx1c0dbb5b637c056d";
 
-	public static final String APP_SECRET = "960b040a23766fa6606831c3c47fa496";
+	public static final String APP_SECRET = "056985fffa08dda72786fc8ab37006fc";//"960b040a23766fa6606831c3c47fa496";
 
 	/**
 	 * 获取微信access_token的url
@@ -39,12 +39,12 @@ public class WeiXinConfigConstant {
 	/**
 	 * 获取微信jsapi_ticket的url
 	 */
-	public static final String GRT_JSAPI_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi";
+	public static final String GET_JSAPI_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi";
 
 	/**
 	 * 本项目访问的基本url
 	 */
-	public static final String BASE_URL = "http://cb29d967.ngrok.io";
+	public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com:8100";
 
 	/**
 	 * 微信授权重定向的url，处理获取用户信息的过程
