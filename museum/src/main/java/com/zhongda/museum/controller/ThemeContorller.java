@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zhongda.museum.model.Theme;
 import com.zhongda.museum.service.ThemeService;
+import com.zhongda.museum.utils.WeiXinUtils;
 
 @RestController
 @RequestMapping("/theme")
@@ -35,5 +37,11 @@ public class ThemeContorller {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "themeId", value = "展厅id", required = true, dataType = "Integer", paramType = "query") })
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
+	}
+
+	@GetMapping("/test")
+	@ApiOperation(value = "查询展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "根据展厅id查询展厅下的所有文物")
+	public Map<String, String> test(String url) {
+		return WeiXinUtils.getJsapiTicket(url);
 	}
 }

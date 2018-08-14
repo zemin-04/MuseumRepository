@@ -19,12 +19,13 @@ import com.zhongda.museum.utils.WeiXinUtils;
 
 @Controller
 public class OauthController {
-	
-	private static Logger logger = LoggerFactory.getLogger(OauthController.class);
-	 
+
+	private static Logger logger = LoggerFactory
+			.getLogger(OauthController.class);
+
 	@Resource
 	private UserService userService;
-	
+
 	@RequestMapping("/home")
 	public String home(String code) {
 		OauthToken oauthToken = WeiXinUtils.getOauthToken(code);
@@ -38,6 +39,7 @@ public class OauthController {
 		claims.put("userName", user.getNickname());
 		String jwtToken = JwtTokenUtils.createJsonWebToken(claims);
 		logger.info(jwtToken);
-		return "redirect:http://zjjlmp.vicp.cc:13025?" + TokenUtils.DEFAULT_TOKEN_NAME + "=" + jwtToken;
+		return "redirect:http://zjjlmp.vicp.cc:13460?"
+				+ TokenUtils.DEFAULT_TOKEN_NAME + "=" + jwtToken;
 	}
 }
