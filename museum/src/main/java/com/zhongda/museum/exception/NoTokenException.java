@@ -1,13 +1,11 @@
 package com.zhongda.museum.exception;
 
-import org.apache.shiro.authc.AuthenticationException;
-
 /**
  * Title: 自定义的RuntimeException
  * Description:没有传入token做验证时抛出
  * @Author dengzm
  */
-public class NoTokenException extends AuthenticationException {
+public class NoTokenException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	

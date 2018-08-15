@@ -25,7 +25,6 @@ public class CorsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
-		System.out.println("------------------------------");
 		HttpServletResponse response = (HttpServletResponse) res;
 		response.setHeader("Access-Control-Allow-Origin",
 				((HttpServletRequest) req).getHeader("Origin"));// 允许所有域进行访问,可以指定多个Access-Control-Allow-Origin:http://localhost:8080/

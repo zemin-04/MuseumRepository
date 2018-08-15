@@ -44,12 +44,12 @@ public class WeiXinConfigConstant {
 	/**
 	 * 本项目访问的基本url
 	 */
-	public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com:8100";
-
+	public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com/museum";
+	
 	/**
-	 * 微信授权重定向的url，处理获取用户信息的过程
+	 * 前端项目访问的基本url
 	 */
-	public static final String HOME_URL = BASE_URL + "/museum/home";
+	public static final String FRONT_BASE_URL = "http://zhdtepp.zdjcyun-iot.com:3000";
 
 	/**
 	 * 微信公众号配置的校验token，验证请求是否是来自微信

@@ -1,8 +1,12 @@
 package com.zhongda.museum.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class JsapiTicket {
+public class JsapiTicket implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("errcode")
 	private int errcode;

@@ -1,9 +1,13 @@
 package com.zhongda.museum.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AccessToken {
+public class AccessToken implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@JsonProperty("access_token")
 	private String accessToken;
 	

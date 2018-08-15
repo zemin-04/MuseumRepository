@@ -18,41 +18,54 @@ public class WeiXinUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(WeiXinUtils.class);
 
-	private static ObjectMapper objectMapper = SpringUtils
-			.getBean(ObjectMapper.class);
-	// 与接口配置信息中的Token要一致
-	public static AccessToken accessToken = null;
+	private static ObjectMapper objectMapper = SpringUtils.getBean(ObjectMapper.class);
 
 	/**
 	 * 获取微信access_token
-	 * 
 	 * @return
 	 */
 	public static AccessToken getAccessToken() {
-		String url = String.format(WeiXinConfigConstant.GET_ACCESS_TOKEN_URL,
-				WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET);
-		String result = HttpClientUtils.httpGetRequest(url);
-		AccessToken token = null;
-		try {
-			token = objectMapper.readValue(result, AccessToken.class);
-		} catch (IOException e) {
-			e.printStackTrace();
+		AccessToken accessToken = (AccessToken) CacheUtils.get(CacheUtils.CACHE_ACCESS_TOKEN, "accessToken");
+		if(null == accessToken){
+			String url = String.format(WeiXinConfigConstant.GET_ACCESS_TOKEN_URL,
+					WeiXinConfigConstant.APP_ID, WeiXinConfigConstant.APP_SECRET);
+			String result = HttpClientUtils.httpGetRequest(url);
+			try {
+				accessToken = objectMapper.readValue(result, AccessToken.class);
+				CacheUtils.put(CacheUtils.CACHE_ACCESS_TOKEN, "accessToken", accessToken);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return token;
+		return accessToken;
+	}
+	
+	/**
+	 * 获取微信JS API 的Ticket
+	 * @param signUrl
+	 * @return
+	 */
+	public static JsapiTicket getJsapiTicket() {
+		JsapiTicket jsapiTicket = (JsapiTicket) CacheUtils.get(CacheUtils.CACHE_JSAPI_TICKET, "jsapiTicket");
+		if(null == jsapiTicket){
+			String url = String.format(WeiXinConfigConstant.GET_JSAPI_TICKET_URL, getAccessToken().getAccessToken());
+			String result = HttpClientUtils.httpGetRequest(url);
+			try {
+				jsapiTicket = objectMapper.readValue(result, JsapiTicket.class);
+				CacheUtils.put(CacheUtils.CACHE_JSAPI_TICKET, "jsapiTicket", jsapiTicket);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return jsapiTicket;
 	}
 
 	/**
 	 * 自定义菜单
-	 * 
-	 * @param menu
-	 *            菜单对象
+	 * @param menu 菜单对象
 	 */
 	public static void createMenu(Menu menu) {
-		if (null == accessToken) {
-			accessToken = getAccessToken();
-		}
-		String url = String.format(WeiXinConfigConstant.CREATE_MENU_URL,
-				accessToken.getAccessToken());
+		String url = String.format(WeiXinConfigConstant.CREATE_MENU_URL, getAccessToken().getAccessToken());
 		String jsonData = null;
 		try {
 			jsonData = objectMapper.writeValueAsString(menu);
@@ -65,7 +78,6 @@ public class WeiXinUtils {
 
 	/**
 	 * 获取微信oauth_token
-	 * 
 	 * @param code
 	 * @return
 	 */
@@ -100,26 +112,5 @@ public class WeiXinUtils {
 			e.printStackTrace();
 		}
 		return user;
-	}
-	
-	/**
-	 * 获取微信JS API 的Ticket
-	 * @param signUrl
-	 * @return
-	 */
-	public static JsapiTicket getJsapiTicket() {
-		if (null == accessToken) {
-			accessToken = getAccessToken();
-		}
-		String url = String.format(WeiXinConfigConstant.GET_JSAPI_TICKET_URL,
-				accessToken.getAccessToken());
-		String result = HttpClientUtils.httpGetRequest(url);
-		JsapiTicket jsapiTicket = null;
-		try {
-			jsapiTicket = objectMapper.readValue(result, JsapiTicket.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return jsapiTicket;
 	}
 }
