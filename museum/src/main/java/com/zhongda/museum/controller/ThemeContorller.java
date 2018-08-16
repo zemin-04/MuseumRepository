@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhongda.museum.constant.WeiXinConfigConstant;
 import com.zhongda.museum.model.JsapiTicket;
 import com.zhongda.museum.model.Theme;
 import com.zhongda.museum.service.ThemeService;
@@ -45,7 +46,9 @@ public class ThemeContorller {
 	@ApiOperation(value = "获取对应url的签名信息", httpMethod = "GET", response = Map.class, notes = "获取对应url的签名信息")
 	public Map<String, String> test(String url) {
 		JsapiTicket jsapiTicket = WeiXinUtils.getJsapiTicket();
-		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(), url);
+		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(),
+				url);
+		result.put("appId", WeiXinConfigConstant.APP_ID);
 		return result;
 	}
 }

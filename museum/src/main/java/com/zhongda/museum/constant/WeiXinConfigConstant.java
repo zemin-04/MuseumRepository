@@ -2,9 +2,9 @@ package com.zhongda.museum.constant;
 
 public class WeiXinConfigConstant {
 
-	public static final String APP_ID = "wx26c4263f989aff61";//"wx1c0dbb5b637c056d";
+	public static final String APP_ID = "wx26c4263f989aff61";// "";wx1c0dbb5b637c056d
 
-	public static final String APP_SECRET = "056985fffa08dda72786fc8ab37006fc";//"960b040a23766fa6606831c3c47fa496";
+	public static final String APP_SECRET = "056985fffa08dda72786fc8ab37006fc";// "960b040a23766fa6606831c3c47fa496";
 
 	/**
 	 * 获取微信access_token的url
@@ -45,7 +45,9 @@ public class WeiXinConfigConstant {
 	 * 本项目访问的基本url
 	 */
 	public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com/museum";
-	
+
+	// public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com";
+
 	/**
 	 * 前端项目访问的基本url
 	 */
