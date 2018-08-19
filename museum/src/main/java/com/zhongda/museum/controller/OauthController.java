@@ -20,7 +20,6 @@ import com.zhongda.museum.model.OauthToken;
 import com.zhongda.museum.model.User;
 import com.zhongda.museum.service.UserService;
 import com.zhongda.museum.utils.JwtTokenUtils;
-import com.zhongda.museum.utils.ShiroUtils;
 import com.zhongda.museum.utils.TokenUtils;
 import com.zhongda.museum.utils.WeiXinUtils;
 
@@ -45,8 +44,8 @@ public class OauthController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "resultUrl", value = "需重定向的url", required = true, dataType = "String", paramType = "query") })
     public String oauthUrl(String resultUrl) {
         if (resultUrl != null) {
-        	User user = ShiroUtils.getCurrentUser();
-        	if(null == user){
+        	String token = TokenUtils.getToken();
+        	if(null == token){
         		//构造重定向url
                 resultUrl =WeiXinConfigConstant.BASE_URL+"/oauth/authorize?authorizeUrl="+resultUrl;
                 //组装授权url
@@ -78,10 +77,5 @@ public class OauthController {
 		}else{
 			return "redirect:" + WeiXinConfigConstant.FRONT_BASE_URL + "/error?msg=用户拒绝授权";
 		}
-	}
-	
-	@RequestMapping("/test")
-	public String Test() {
-		return "index";
 	}
 }

@@ -1,18 +1,30 @@
 package com.zhongda.museum.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhongda.museum.constant.WeiXinConfigConstant;
+import com.zhongda.museum.model.JsapiTicket;
 import com.zhongda.museum.utils.SignUtils;
+import com.zhongda.museum.utils.WeiXinUtils;
 
 @RestController
+@RequestMapping("/common")
+@Api(tags = { "常用操作接口" })
 public class CommonController {
 
 	private static Logger logger = LoggerFactory.getLogger(CommonController.class);
@@ -47,5 +59,14 @@ public class CommonController {
 			logger.error("签名校验失败。");
 		}
 	}
-
+	
+	@GetMapping("/sianUrl")
+	@ApiOperation(value = "获取对应url的签名信息", httpMethod = "GET", response = Map.class, notes = "获取对应url的签名信息")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "url", value = "url路径", required = true, dataType = "String", paramType = "query") })
+	public Map<String, String> sianUrl(String url) {
+		JsapiTicket jsapiTicket = WeiXinUtils.getJsapiTicket();
+		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(), url);
+		result.put("appId", WeiXinConfigConstant.APP_ID);
+		return result;
+	}
 }

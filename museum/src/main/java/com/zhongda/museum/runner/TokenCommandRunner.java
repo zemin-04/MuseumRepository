@@ -20,7 +20,7 @@ public class TokenCommandRunner implements CommandLineRunner {
 		CommonButton btn = new CommonButton();
 		btn.setName("语音导览");
 		btn.setType("view");
-		btn.setUrl(WeiXinConfigConstant.FRONT_BASE_URL);
+		btn.setUrl(WeiXinConfigConstant.BASE_URL + "/oauth/oauthUrl?resultUrl=" + WeiXinConfigConstant.FRONT_BASE_URL);
 
 		ComplexButton mainBtn = new ComplexButton();
 		mainBtn.setName("博物馆");

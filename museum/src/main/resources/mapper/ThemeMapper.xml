@@ -10,14 +10,7 @@
     <result column="theme_sort" jdbcType="INTEGER" property="themeSort" />
     <result column="theme_imageurl" jdbcType="VARCHAR" property="themeImageurl" />
   </resultMap>
-  <resultMap id="TheCulMap" type="com.zhongda.museum.model.Theme">
-    <id column="theme_id" jdbcType="INTEGER" property="themeId" />
-    <result column="theme_name" jdbcType="VARCHAR" property="themeName" />
-    <result column="theme_position" jdbcType="VARCHAR" property="themePosition" />
-    <result column="theme_type" jdbcType="VARCHAR" property="themeType" />
-    <result column="theme_date" jdbcType="VARCHAR" property="themeDate" />
-    <result column="theme_sort" jdbcType="INTEGER" property="themeSort" />
-    <result column="theme_imageurl" jdbcType="VARCHAR" property="themeImageurl" />
+  <resultMap id="TheCulMap" type="com.zhongda.museum.model.Theme" extends="BaseResultMap">
     <collection property="Culturalrelicss" javaType="java.util.List" ofType="com.zhongda.museum.model.Culturalrelics">
     	<id column="culturalrelics_id" jdbcType="INTEGER" property="culturalrelicsId" />
 	    <result column="culturalrelic_themeid" jdbcType="INTEGER" property="culturalrelicThemeid" />
@@ -35,10 +28,15 @@
     theme_id, theme_name, theme_position, theme_type, theme_date, theme_sort, theme_imageurl
   </sql>
   <select id="selectAllTheme" resultMap="BaseResultMap">
-  	select * from theme ORDER BY theme_sort
+  	select
+  	<include refid="Base_Column_List" /> 
+	from theme ORDER BY theme_sort
   </select>
   <select id="selectCulreliBuThemeId" resultMap="TheCulMap">
   	select * from theme t LEFT JOIN culturalrelics cu  on t.theme_id=cu.culturalrelic_themeid where theme_id =#{themeId,jdbcType=INTEGER} ORDER BY cu.culturalrelics_sort desc
+  </select>
+  <select id="selectThemeRelics" resultMap="TheCulMap">
+  	select * from theme t LEFT JOIN culturalrelics cu  on t.theme_id=cu.culturalrelic_themeid ORDER BY t.theme_sort asc
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

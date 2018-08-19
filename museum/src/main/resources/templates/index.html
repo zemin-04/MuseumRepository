@@ -13,80 +13,58 @@
         </style>
 	</head>
 	<body>
-		<div class="page__hd">
-	        <h1 class="page__title">语音导览后台管理系统</h1>
-	        <p class="page__desc">维护语音导览系统的文物信息，统计文物的访问量</p>
-	    </div>
-	    <div class="page__bd">
-	    	
-	    </div>
-	    
-	    <div class="page footer js_show">
-		    <div class="page__bd page__bd_spacing">
-		        <div class="weui-footer weui-footer_fixed-bottom">
+		<div class="page">
+		    <div class="page__hd">
+		        <h1 class="page__title">语音导览后台管理系统</h1>
+		        <p class="page__desc">访问量统计分析</p>
+		    </div>  
+		    <div class="page__bd">
+		        <div class="weui-cells__title">选择对应的文物展示其访问量的变化</div>
+		        <div class="weui-cells weui-cells_form">
+		            <div class="weui-cell">
+		                <div class="weui-cell__hd"><label class="weui-label">文物</label></div>
+		                <div class="weui-cell__bd">
+		                    <input class="weui-input" type="text" readonly="readonly" id="showPicker" placeholder="请选择文物"/>
+		                </div>
+		            </div>
+		            <div class="weui-cell">
+		                <div class="weui-cell__hd"><label for="" class="weui-label">起始时间</label></div>
+		                <div class="weui-cell__bd">
+		                    <input class="weui-input" type="datetime-local" value="" placeholder="请选择起始时间"/>
+		                </div>
+		            </div>
+		            <div class="weui-cell">
+		                <div class="weui-cell__hd"><label for="" class="weui-label">结束时间</label></div>
+		                <div class="weui-cell__bd">
+		                    <input class="weui-input" type="datetime-local" value="" placeholder="请选择结束时间"/>
+		                </div>
+		            </div>
+		        </div>
+	
+		        <div class="weui-btn-area">
+		            <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+		        </div>
+		        
+		        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    			<div id="main" style="height:400px;"></div>
+		        
+		    </div>
+		    <div class="page__ft">
+		        <div class="weui-footer">
 				    <p class="weui-footer__links">
-				        <a href="#" class="weui-footer__link">张家界博物馆</a>
+				        <a href="#" class="weui-footer__link">底部链接</a>
 				    </p>
 				    <p class="weui-footer__text">Copyright © 2018 Museum</p>
 				</div>
 		    </div>
 		</div>
-	    
-
-	    <div class="page tabbar js_show">
+    	
+    	<div class="page">
 		    <div class="page__bd" style="height: 100%;">
 		        <div class="weui-tab">
-		            <!--<div class="weui-tab__panel">
-		 				
-		            </div>-->
-		            
-		            <div class="weui-tab__bd">
-		                <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
-		                    <div class="weui_cells_title">选择对应的文物展示其访问量的变化</div>
-				            <div class="weui_cells weui_cells_form">
-				                <div class="weui_cell">
-				                	
-				                    <div class="weui-cell__hd">
-				                    	<label class="weui-label">文物</label>
-				                    </div>
-					                <div class="weui-cell__bd">
-					                    <input class="weui-input" type="button" placeholder="请选择文物" id="showPicker"/>
-					                </div>
-				                    
-				                </div>
-				                <div class="weui_cell">
-				                    <div class="weui_cell_hd">
-				                        <label class="weui_label">银行卡</label>
-				                    </div>
-				                    <div class="weui_cell_bd weui_cell_primary">
-				                        <input class="weui_input" type="number" pattern="[0-9]*" placeholder="请输入银行卡号" />
-				                    </div>
-				                </div>
-				                <div class="weui_cell weui_vcode weui_cell_warn">
-				                    <div class="weui_cell_hd">
-				                        <label class="weui_label">验证码</label>
-				                    </div>
-				                    <div class="weui_cell_bd weui_cell_primary">
-				                        <input class="weui_input" type="number" placeholder="请输入验证码" />
-				                    </div>
-				                </div>
-				            </div>
-				            <div class="weui_cells_tips">底部说明文字底部说明文字</div>
-				            <div class="weui_btn_area">
-				                <a class="weui_btn weui_btn_primary" href="javascript:" id="showTooltips">确定</a>
-				            </div>
-		                </div>
-		                <div id="tab2" class="weui-tab__bd-item">
-		                    <h1>页面二</h1>
-		                </div>
-		                <div id="tab3" class="weui-tab__bd-item">
-		                    <h1>页面三</h1>
-		                </div>
-		                <div id="tab4" class="weui-tab__bd-item">
-		                    <h1>页面四</h1>
-		                </div>
+		            <div class="weui-tab__panel">
+		
 		            </div>
-		            
 		            <div class="weui-tabbar">
 		                <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
 		                    <span style="display: inline-block;position: relative;">
@@ -119,7 +97,9 @@
 
    	<script th:src="@{/js/jquery.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/echarts.js}"></script>
 	<script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script>
+	<script th:src="@{/js/chart.js}"></script>
     <script type="text/javascript" class="tabbar js_show">
 	    $(function(){
 	        $('.weui-tabbar__item').on('click', function () {
@@ -129,67 +109,32 @@
 	        });
 	        
 	        $('#showPicker').on('click', function () {
-		    	// 级联picker
-				weui.picker([
-				{
-				    label: '飞机票',
-				    value: 0,
-				    children: [
-				        {
-				            label: '经济舱',
-				            value: 1
-				        },
-				        {
-				            label: '商务舱',
-				            value: 2
-				        }
-				    ]
-				},
-				{
-				    label: '火车票',
-				    value: 1,
-				    children: [
-				        {
-				            label: '卧铺',
-				            value: 1,
-				            disabled: true // 不可用
-				        },
-				        {
-				            label: '坐票',
-				            value: 2
-				        },
-				        {
-				            label: '站票',
-				            value: 3
-				        }
-				    ]
-				},
-				{
-				    label: '汽车票',
-				    value: 3,
-				    children: [
-				        {
-				            label: '快班',
-				            value: 1
-				        },
-				        {
-				            label: '普通',
-				            value: 2
-				        }
-				    ]
-				}
-				], {
-				   className: 'custom-classname',
-				   container: 'body',
-				   defaultValue: [1, 3],
-				   onChange: function (result) {
-				       console.log(result)
-				   },
-				   onConfirm: function (result) {
-				       console.log(result)
-				   },
-				   id: 'doubleLinePicker'
-				});
+	        	$.get("/museum/theme/themeRelics", function(data){
+	        		var themeArr=new Array();
+	                $.each(data, function(i, theme) {
+	                	var relicsArr=new Array();
+	                	$.each(theme.culturalrelicss, function(j, relics){
+	                		var relics={'label':relics.culturalrelicsName, 'value':relics.culturalrelicsId};
+	                		relicsArr.push(relics);
+	                	});
+	                	var theme={'label':theme.themeName, 'value':theme.themeId, 'children':relicsArr};
+	                	themeArr.push(theme);
+	                });
+	             	// 级联picker
+					weui.picker(themeArr, {
+					   className: 'custom-classname',
+					   container: 'body',
+					   defaultValue: [1, 3],
+					   onChange: function (result) {
+					       console.log(result);
+					   },
+					   onConfirm: function (result) {
+					       console.log(result);
+					       $('#showPicker').val(result[0].label + result[1].label);
+					   },
+					   id: 'doubleLinePicker'
+					});
+	            });
 		    });
 	    });
 	</script>

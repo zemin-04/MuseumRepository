@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -14,12 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zhongda.museum.constant.WeiXinConfigConstant;
-import com.zhongda.museum.model.JsapiTicket;
 import com.zhongda.museum.model.Theme;
 import com.zhongda.museum.service.ThemeService;
-import com.zhongda.museum.utils.SignUtils;
-import com.zhongda.museum.utils.WeiXinUtils;
 
 @RestController
 @RequestMapping("/theme")
@@ -41,14 +36,10 @@ public class ThemeContorller {
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
 	}
-
-	@GetMapping("/test")
-	@ApiOperation(value = "获取对应url的签名信息", httpMethod = "GET", response = Map.class, notes = "获取对应url的签名信息")
-	public Map<String, String> test(String url) {
-		JsapiTicket jsapiTicket = WeiXinUtils.getJsapiTicket();
-		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(),
-				url);
-		result.put("appId", WeiXinConfigConstant.APP_ID);
-		return result;
+	
+	@GetMapping("/themeRelics")
+	@ApiOperation(value = "查询所有展厅和展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "查询所有展厅和展厅下的所有文物")
+	public List<Theme> themeRelics() {
+		return themeService.selectThemeRelics();
 	}
 }

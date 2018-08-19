@@ -20,4 +20,10 @@ public interface ThemeService {
 	 * @return
 	 */
 	Theme selectCulreliBuThemeId(Integer themeId);
+	
+	/**
+	 * 查询所有展厅和展厅下的所有文物
+	 * @return
+	 */
+	List<Theme> selectThemeRelics();
 }

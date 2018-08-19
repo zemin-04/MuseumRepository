@@ -26,4 +26,8 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeMapper.selectCulreliBuThemeId(themeId);
 	}
 
+	@Override
+	public List<Theme> selectThemeRelics() {
+		return themeMapper.selectThemeRelics();
+	}
 }
