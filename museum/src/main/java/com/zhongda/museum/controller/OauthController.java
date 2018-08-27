@@ -33,34 +33,39 @@ public class OauthController {
 
 	@Resource
 	private UserService userService;
-	
+
 	/**
 	 * 组装授权url
-	 * @param resultUrl 需重定向的url
+	 * 
+	 * @param resultUrl
+	 *            需重定向的url
 	 * @return
 	 */
-    @RequestMapping(value ="/oauthUrl")
-    @ApiOperation(value = "构造授权url,并进行微信授权", httpMethod = "GET", response = String.class, notes = "构造授权url,并进行微信授权")
+	@RequestMapping(value = "/oauthUrl")
+	@ApiOperation(value = "构造授权url,并进行微信授权", httpMethod = "GET", response = String.class, notes = "构造授权url,并进行微信授权")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "resultUrl", value = "需重定向的url", required = true, dataType = "String", paramType = "query") })
-    public String oauthUrl(String resultUrl) {
-        if (resultUrl != null) {
-        	String token = TokenUtils.getToken();
-        	if(null == token){
-        		//构造重定向url
-                resultUrl =WeiXinConfigConstant.BASE_URL+"/oauth/authorize?authorizeUrl="+resultUrl;
-                //组装授权url
-                resultUrl = String.format(WeiXinConfigConstant.GET_CODE_Y_URL, WeiXinConfigConstant.APP_ID, resultUrl);
-        	}
-            logger.info("resultUrl:" + resultUrl);
-            return "redirect:" + resultUrl;
-        }else{
-        	return "redirect:" + WeiXinConfigConstant.FRONT_BASE_URL + "/error?msg=没有url，无法授权";
-        }
-    }
-	
+	public String oauthUrl(String resultUrl) {
+		if (resultUrl != null) {
+			String token = TokenUtils.getToken();
+			if (null == token) {
+				// 构造重定向url
+				resultUrl = WeiXinConfigConstant.BASE_URL
+						+ "/oauth/authorize?authorizeUrl=" + resultUrl;
+				// 组装授权url
+				resultUrl = String.format(WeiXinConfigConstant.GET_CODE_Y_URL,
+						WeiXinConfigConstant.APP_ID, resultUrl);
+			}
+			logger.info("resultUrl:" + resultUrl);
+			return "redirect:" + resultUrl;
+		} else {
+			return "redirect:" + WeiXinConfigConstant.FRONT_BASE_URL
+					+ "/error?msg=没有url，无法授权";
+		}
+	}
+
 	@RequestMapping("/authorize")
 	public String authorize(String code, String authorizeUrl) {
-		//如果用户同意授权
+		// 如果用户同意授权
 		if (!"authdeny".equals(code)) {
 			OauthToken oauthToken = WeiXinUtils.getOauthToken(code);
 			User user = userService.selectByOpenid(oauthToken.getOpenid());
@@ -73,9 +78,12 @@ public class OauthController {
 			claims.put("userName", user.getNickname());
 			String jwtToken = JwtTokenUtils.createJsonWebToken(claims);
 			logger.info(authorizeUrl);
-			return "redirect:" + authorizeUrl + "?" + TokenUtils.DEFAULT_TOKEN_NAME + "=" + jwtToken;
-		}else{
-			return "redirect:" + WeiXinConfigConstant.FRONT_BASE_URL + "/error?msg=用户拒绝授权";
+			return "redirect:" + authorizeUrl + "?"
+					+ TokenUtils.DEFAULT_TOKEN_NAME + "=" + jwtToken;
+		} else {
+			return "redirect:" + WeiXinConfigConstant.FRONT_BASE_URL
+					+ "/error?msg=用户拒绝授权";
 		}
 	}
+
 }

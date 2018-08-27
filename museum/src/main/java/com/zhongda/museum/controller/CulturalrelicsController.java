@@ -65,6 +65,8 @@ public class CulturalrelicsController {
 	@ApiOperation(value = "通过文物id查询文物", httpMethod = "GET", response = Culturalrelics.class, notes = "通过文物id查询文物")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "culturalrelicsId", value = "文物id", required = true, dataType = "Integer", paramType = "query") })
 	public Culturalrelics findCulturalrelics(Integer culturalrelicsId) {
+		User user = ShiroUtils.getCurrentUser();
+		culturalrelicsService.plusAccess(user.getOpenid(), culturalrelicsId);
 		return culturalrelicsService.findCulturalrelics(culturalrelicsId);
 	}
 

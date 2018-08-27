@@ -2,9 +2,12 @@ package com.zhongda.museum.constant;
 
 public class WeiXinConfigConstant {
 
-	public static final String APP_ID = "wx26c4263f989aff61";// "";wx1c0dbb5b637c056d
+	// public static final String APP_ID = "wx1e9eae4dd62c0801";
+	public static final String APP_ID = "wx1c0dbb5b637c056d";
 
-	public static final String APP_SECRET = "056985fffa08dda72786fc8ab37006fc";// "960b040a23766fa6606831c3c47fa496";
+	// public static final String APP_SECRET =
+	// "ec11f8e1059061d6ac071039034bc38e";
+	public static final String APP_SECRET = "960b040a23766fa6606831c3c47fa496";
 
 	/**
 	 * 获取微信access_token的url
@@ -44,14 +47,16 @@ public class WeiXinConfigConstant {
 	/**
 	 * 本项目访问的基本url
 	 */
-	public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com/museum";
-
-	// public static final String BASE_URL = "http://zhdtepp.zdjcyun-iot.com";
+	// public static final String BASE_URL =
+	// "http://weixin.zjjsmuseum.com/museum";
+	public static final String BASE_URL = "http://zjjlmp.vicp.cc/museum";
 
 	/**
 	 * 前端项目访问的基本url
 	 */
-	public static final String FRONT_BASE_URL = "http://zhdtepp.zdjcyun-iot.com:3000";
+	// public static final String FRONT_BASE_URL =
+	// "http://weixin.zjjsmuseum.com";
+	public static final String FRONT_BASE_URL = "http://zjjlmp.vicp.cc:29823";
 
 	/**
 	 * 微信公众号配置的校验token，验证请求是否是来自微信

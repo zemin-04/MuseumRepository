@@ -27,6 +27,12 @@ public class ThemeContorller {
 	@GetMapping("/allTheme")
 	@ApiOperation(value = "查询所有展厅", httpMethod = "GET", response = List.class, notes = "查询所有展厅")
 	public List<Theme> allTheme() {
+		// try {
+		// Thread.sleep(5000);
+		// } catch (InterruptedException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		return themeService.selectAllTheme();
 	}
 
@@ -36,10 +42,16 @@ public class ThemeContorller {
 	public Theme themeCul(Integer themeId) {
 		return themeService.selectCulreliBuThemeId(themeId);
 	}
-	
+
 	@GetMapping("/themeRelics")
 	@ApiOperation(value = "查询所有展厅和展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "查询所有展厅和展厅下的所有文物")
 	public List<Theme> themeRelics() {
 		return themeService.selectThemeRelics();
+	}
+
+	@GetMapping("/test")
+	@ApiOperation(value = "查询所有展厅和展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "查询所有展厅和展厅下的所有文物")
+	public String test() {
+		return "hello ";
 	}
 }

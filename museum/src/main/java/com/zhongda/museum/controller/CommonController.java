@@ -27,7 +27,8 @@ import com.zhongda.museum.utils.WeiXinUtils;
 @Api(tags = { "常用操作接口" })
 public class CommonController {
 
-	private static Logger logger = LoggerFactory.getLogger(CommonController.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(CommonController.class);
 
 	/**
 	 * 微信消息接收和token验证(验证消息来源是否是微信服务器)
@@ -59,13 +60,14 @@ public class CommonController {
 			logger.error("签名校验失败。");
 		}
 	}
-	
+
 	@GetMapping("/sianUrl")
 	@ApiOperation(value = "获取对应url的签名信息", httpMethod = "GET", response = Map.class, notes = "获取对应url的签名信息")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "url", value = "url路径", required = true, dataType = "String", paramType = "query") })
 	public Map<String, String> sianUrl(String url) {
 		JsapiTicket jsapiTicket = WeiXinUtils.getJsapiTicket();
-		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(), url);
+		Map<String, String> result = SignUtils.sign(jsapiTicket.getTicket(),
+				url);
 		result.put("appId", WeiXinConfigConstant.APP_ID);
 		return result;
 	}
