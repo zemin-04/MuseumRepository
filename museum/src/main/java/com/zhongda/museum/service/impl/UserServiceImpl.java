@@ -1,5 +1,7 @@
 package com.zhongda.museum.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +25,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User selectByOpenid(String openid) {
 		return userMapper.selectByOpenid(openid);
+	}
+
+	@Override
+	public List<User> selectAllUser() {
+		return userMapper.selectAllUser();
 	}
 
 }

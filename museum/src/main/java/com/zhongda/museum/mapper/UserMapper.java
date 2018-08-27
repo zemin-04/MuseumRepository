@@ -1,5 +1,7 @@
 package com.zhongda.museum.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zhongda.museum.model.User;
@@ -19,4 +21,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
 	User selectByOpenid(String openid);
+
+	List<User> selectAllUser();
 }

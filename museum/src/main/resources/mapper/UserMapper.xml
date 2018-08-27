@@ -30,6 +30,11 @@
     from user
     where openid = #{openid,jdbcType=VARCHAR}
   </select>
+  <select id="selectAllUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where userid = #{userid,jdbcType=INTEGER}

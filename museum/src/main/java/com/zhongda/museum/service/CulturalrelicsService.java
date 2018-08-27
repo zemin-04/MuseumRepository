@@ -22,20 +22,13 @@ public interface CulturalrelicsService {
 	boolean plusAccess(String openid, Integer culturalrelicsId);
 	
 	/**
-	 * 增加对应用户对文物的一次点赞量
+	 * 如果数据库没有当前用户文物的点赞记录，则增加对应用户对文物的点赞
+	 * 如果数据库有当前用户文物的点赞记录，则删除对应用户对文物的点赞
 	 * @param openid 用户唯一标识
 	 * @param culturalrelicsId 文物唯一标识
-	 * @return
+	 * @return 返回true代表点赞成功， 返回false代表取消点赞成功
 	 */
-	boolean plusThumbUp(String openid, Integer culturalrelicsId);
-	
-	/**
-	 * 减少对应用户对文物的一次点赞量
-	 * @param openid 用户唯一标识
-	 * @param culturalrelicsId 文物唯一标识
-	 * @return
-	 */
-	boolean minusThumbUp(String openid, Integer culturalrelicsId);
+	boolean plusOrMinusThumbUp(String openid, Integer culturalrelicsId);
 
 	/**
 	 * 搜索符合条件的文物

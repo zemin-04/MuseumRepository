@@ -41,31 +41,20 @@ public class CulturalrelicsServiceImpl implements CulturalrelicsService {
 
 	@Transactional
 	@Override
-	public boolean plusThumbUp(String openid, Integer culturalrelicsId) {
-		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(
-				openid, culturalrelicsId);
+	public boolean plusOrMinusThumbUp(String openid, Integer culturalrelicsId) {
+		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(openid, culturalrelicsId);
 		if (null == thumbUp) {
-			culturalrelicsMapper
-					.updatePlusThumbUpByCulturalrelicsId(culturalrelicsId);
+			//如果没有点赞记录，则增加一次点赞记录
+			culturalrelicsMapper.updatePlusThumbUpByCulturalrelicsId(culturalrelicsId);
 			thumbUp = new ThumbUp(openid, culturalrelicsId);
 			thumbUpMapper.insertSelective(thumbUp);
 			return true;
-		}
-		return false;
-	}
-
-	@Transactional
-	@Override
-	public boolean minusThumbUp(String openid, Integer culturalrelicsId) {
-		ThumbUp thumbUp = thumbUpMapper.selectByOpenidAndCulturalrelicsId(
-				openid, culturalrelicsId);
-		if (null != thumbUp) {
-			culturalrelicsMapper
-					.updateMinusThumbUpByCulturalrelicsId(culturalrelicsId);
+		} else {
+			//如果有点赞记录，则删除当前点赞记录
+			culturalrelicsMapper.updateMinusThumbUpByCulturalrelicsId(culturalrelicsId);
 			thumbUpMapper.deleteByPrimaryKey(thumbUp.getThumbUpId());
-			return true;
+			return false;
 		}
-		return false;
 	}
 
 	@Override

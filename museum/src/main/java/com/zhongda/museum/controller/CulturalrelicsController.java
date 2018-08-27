@@ -29,7 +29,7 @@ public class CulturalrelicsController {
 	private CulturalrelicsService culturalrelicsService;
 
 	@PostMapping("/plusAccess")
-	@ApiOperation(value = "对应文物增加一次访问量", httpMethod = "POST", response = Integer.class, notes = "根据文物id对应文物增加一次访问量")
+	@ApiOperation(value = "对应文物增加一次访问量", httpMethod = "POST", response = Result.class, notes = "根据文物id对应文物增加一次访问量")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "culturalrelicsId", value = "文物id", required = true, dataType = "Integer", paramType = "query") })
 	public Result<String> plusAccess(Integer culturalrelicsId) {
 		Result<String> result = new Result<String>();
@@ -39,26 +39,14 @@ public class CulturalrelicsController {
 		return flag ? result.success("增加访问量成功") : result.failure("增加访问量失败");
 	}
 
-	@PostMapping("/plusThumbUp")
-	@ApiOperation(value = "对应文物增加一次点赞量", httpMethod = "POST", response = Void.class, notes = "根据文物id对应文物增加一次点赞量")
+	@PostMapping("/plusOrMinusThumbUp")
+	@ApiOperation(value = "根据是否点赞的记录来决定是增加点赞还是删除对应点赞", httpMethod = "POST", response = Result.class, notes = "如果有点赞记录则删除，如果没有点赞记录则增加")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "culturalrelicsId", value = "文物id", required = true, dataType = "Integer", paramType = "query") })
-	public Result<String> plusThumbUp(Integer culturalrelicsId) {
+	public Result<String> plusOrMinusThumbUp(Integer culturalrelicsId) {
 		Result<String> result = new Result<String>();
 		User user = ShiroUtils.getCurrentUser();
-		boolean flag = culturalrelicsService.plusThumbUp(user.getOpenid(),
-				culturalrelicsId);
-		return flag ? result.success("点赞成功") : result.failure("已经点赞，请不要重复点赞");
-	}
-
-	@PostMapping("/minusThumbUp")
-	@ApiOperation(value = "对应文物减少一次点赞量", httpMethod = "POST", response = Void.class, notes = "根据文物id对应文物减少一次点赞量")
-	@ApiImplicitParams({ @ApiImplicitParam(name = "culturalrelicsId", value = "文物id", required = true, dataType = "Integer", paramType = "query") })
-	public Result<String> minusThumbUp(Integer culturalrelicsId) {
-		Result<String> result = new Result<String>();
-		User user = ShiroUtils.getCurrentUser();
-		boolean flag = culturalrelicsService.minusThumbUp(user.getOpenid(),
-				culturalrelicsId);
-		return flag ? result.success("取消点赞成功") : result.failure("还没有点赞，请先点赞");
+		boolean flag = culturalrelicsService.plusOrMinusThumbUp(user.getOpenid(), culturalrelicsId);
+		return flag ? result.success("点赞成功") : result.failure("取消点赞成功");
 	}
 
 	@GetMapping("/findCulturalrelics")
@@ -71,7 +59,7 @@ public class CulturalrelicsController {
 	}
 
 	@GetMapping("/likeCulturalrelics")
-	@ApiOperation(value = "搜索文物", httpMethod = "GET", response = Culturalrelics.class, notes = "通过关键字搜索文物")
+	@ApiOperation(value = "搜索文物", httpMethod = "GET", response = List.class, notes = "通过关键字搜索文物")
 	@ApiImplicitParams({ @ApiImplicitParam(name = "condition", value = "文物id", required = true, dataType = "Integer", paramType = "query") })
 	public List<Culturalrelics> likeCulturalrelics(String condition,
 			Integer themeId) {

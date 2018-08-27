@@ -1,5 +1,7 @@
 package com.zhongda.museum.service;
 
+import java.util.List;
+
 import com.zhongda.museum.model.User;
 
 public interface UserService {
@@ -17,4 +19,10 @@ public interface UserService {
 	 * @return
 	 */
 	User selectByOpenid(String openid);
+	
+	/**
+	 * 查找所有用户
+	 * @return
+	 */
+	List<User> selectAllUser();
 }
