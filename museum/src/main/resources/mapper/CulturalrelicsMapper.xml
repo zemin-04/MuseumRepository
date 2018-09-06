@@ -12,11 +12,12 @@
     <result column="culturalrelics_zan" jdbcType="INTEGER" property="culturalrelicsZan" />
     <result column="culturalrelics_access" jdbcType="INTEGER" property="culturalrelicsAccess" />
     <result column="culturalrelics_sort" jdbcType="INTEGER" property="culturalrelicsSort" />
+    <result column="culturalrelics_position" jdbcType="INTEGER" property="culturalrelicsPposition" />
   </resultMap>
   <sql id="Base_Column_List">
     culturalrelics_id, culturalrelic_themeid, culturalrelics_name, culturalrelics_number, 
     culturalrelics_Introduction, culturalrelics_imageurl, culturalrelics_musicurl, culturalrelics_zan, 
-    culturalrelics_access, culturalrelics_sort
+    culturalrelics_access, culturalrelics_sort, culturalrelics_position
   </sql>
   <select id="selectculturalrelicsById" resultMap="BaseResultMap">
   	select * from culturalrelics where culturalrelics_id=#{culturalrelicsId,jdbcType=INTEGER}

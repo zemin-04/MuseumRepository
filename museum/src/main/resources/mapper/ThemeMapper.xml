@@ -22,6 +22,7 @@
 	    <result column="culturalrelics_zan" jdbcType="INTEGER" property="culturalrelicsZan" />
 	    <result column="culturalrelics_access" jdbcType="INTEGER" property="culturalrelicsAccess" />
 	    <result column="culturalrelics_sort" jdbcType="INTEGER" property="culturalrelicsSort" />
+	    <result column="culturalrelics_position" jdbcType="INTEGER" property="culturalrelicsPposition" />
     </collection>
   </resultMap>
   <sql id="Base_Column_List">

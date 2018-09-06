@@ -45,7 +45,8 @@ public class CulturalrelicsController {
 	public Result<String> plusOrMinusThumbUp(Integer culturalrelicsId) {
 		Result<String> result = new Result<String>();
 		User user = ShiroUtils.getCurrentUser();
-		boolean flag = culturalrelicsService.plusOrMinusThumbUp(user.getOpenid(), culturalrelicsId);
+		boolean flag = culturalrelicsService.plusOrMinusThumbUp(
+				user.getOpenid(), culturalrelicsId);
 		return flag ? result.success("点赞成功") : result.failure("取消点赞成功");
 	}
 
