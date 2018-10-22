@@ -1,11 +1,11 @@
 package com.zhongda.museum.controller;
 
-import java.util.List;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -69,5 +69,27 @@ public class CulturalrelicsController {
 		}
 		return culturalrelicsService
 				.selectCulturalrelicsLikecondition(condition);
+	}
+	
+	@GetMapping("/findAllCulturalrelics")
+	@ApiOperation(value = "搜索所有文物", httpMethod = "GET", response = List.class, notes = "搜索所有文物")
+	public List<Culturalrelics> findAllCulturalrelics() {
+		return culturalrelicsService.selectAllCulturalrelics();
+	}
+	
+	@PostMapping("/findRelicsByThemeId")
+	@ApiOperation(value = "按对应顺序搜索某一主题下的文物", httpMethod = "POST", response = List.class, notes = "按对应顺序搜索某一主题下的文物")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "主题id", value = "themeId", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "访问量排序方式", value = "accessSort", required = true, dataType = "Integer", paramType = "query"),
+		@ApiImplicitParam(name = "点赞量排序方式", value = "zanSort", required = true, dataType = "Integer", paramType = "query")})
+	public List<Culturalrelics> findRelicsByThemeId(Integer themeId, Integer accessSort, Integer zanSort) {
+		return culturalrelicsService.selectRelicsByThemeId(themeId, accessSort, zanSort);
+	}
+	
+	@PostMapping("/findRelicsByName")
+	@ApiOperation(value = "按照文物名称搜索文物", httpMethod = "POST", response = List.class, notes = "按照文物名称搜索文物")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "文物名称", value = "culturalrelicsName", required = true, dataType = "String", paramType = "query")})
+	public List<Culturalrelics> findRelicsByName(String culturalrelicsName) {
+		return culturalrelicsService.selectCulturalrelicsLikecondition(culturalrelicsName);
 	}
 }

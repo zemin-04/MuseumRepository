@@ -48,7 +48,13 @@ public class ThemeContorller {
 	public List<Theme> themeRelics() {
 		return themeService.selectThemeRelics();
 	}
-
+	
+	@GetMapping("/themeCulFirstSix")
+	@ApiOperation(value = "查询展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "查询每个展厅下的访问量排名前六的文物")
+	public List<Theme> themeCulFirstSix() {
+		return themeService.selectCulFirstSixAllTheme();
+	}
+	
 	@GetMapping("/test")
 	@ApiOperation(value = "查询所有展厅和展厅下的所有文物", httpMethod = "GET", response = Theme.class, notes = "查询所有展厅和展厅下的所有文物")
 	public String test() {

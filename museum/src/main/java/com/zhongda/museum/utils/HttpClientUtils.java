@@ -255,7 +255,7 @@ public class HttpClientUtils {
             if(entity != null) {
                 Charset responseCharset  = ContentType.getOrDefault(entity).getCharset();
                 responseContent = EntityUtils.toString(entity, responseCharset);
-                responseContent = new String(responseContent.getBytes(Charset.forName("UTF-8")));
+                responseContent = new String(responseContent.getBytes(Charset.forName("ISO-8859-1")), Charset.forName("UTF-8"));
                 EntityUtils.consume(entity);
             }
         } catch(ConnectTimeoutException cte) {

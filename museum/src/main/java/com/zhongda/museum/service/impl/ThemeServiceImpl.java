@@ -30,4 +30,9 @@ public class ThemeServiceImpl implements ThemeService {
 	public List<Theme> selectThemeRelics() {
 		return themeMapper.selectThemeRelics();
 	}
+
+	@Override
+	public List<Theme> selectCulFirstSixAllTheme() {
+		return themeMapper.selectCulFirstSixAllTheme();
+	}
 }

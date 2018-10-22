@@ -2,14 +2,19 @@ package com.zhongda.museum.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Access {
     private Integer accessId;
 
     private String openid;
 
     private Integer culturalrelicsId;
-
+    
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
     private Date accessTime;
+    
+    private Integer accessNumber;
     
     public Access(){
     }
@@ -23,7 +28,7 @@ public class Access {
 	public Integer getAccessId() {
         return accessId;
     }
-
+	
     public void setAccessId(Integer accessId) {
         this.accessId = accessId;
     }
@@ -51,4 +56,12 @@ public class Access {
     public void setAccessTime(Date accessTime) {
         this.accessTime = accessTime;
     }
+
+	public Integer getAccessNumber() {
+		return accessNumber;
+	}
+
+	public void setAccessNumber(Integer accessNumber) {
+		this.accessNumber = accessNumber;
+	}
 }

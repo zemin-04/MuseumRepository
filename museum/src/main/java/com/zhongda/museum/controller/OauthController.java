@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zhongda.museum.constant.WeiXinConfigConstant;
 import com.zhongda.museum.model.OauthToken;
@@ -67,6 +68,7 @@ public class OauthController {
 	public String authorize(String code, String authorizeUrl) {
 		// 如果用户同意授权
 		if (!"authdeny".equals(code)) {
+			logger.info(code);
 			OauthToken oauthToken = WeiXinUtils.getOauthToken(code);
 			User user = userService.selectByOpenid(oauthToken.getOpenid());
 			if (null == user) {
@@ -85,5 +87,37 @@ public class OauthController {
 					+ "/error?msg=用户拒绝授权";
 		}
 	}
-
+	
+	@RequestMapping("/login")
+	public String login() {
+		String token = TokenUtils.getToken();
+		String resultUrl = null;
+		if (null == token) {
+			// 构造重定向url
+			resultUrl = WeiXinConfigConstant.BASE_URL
+					+ "/culturalrelics/findAllCulturalrelics" ;
+			// 组装授权url
+			resultUrl = String.format(WeiXinConfigConstant.GET_CODE_Y_URL,
+					WeiXinConfigConstant.APP_ID, resultUrl);
+		}
+		logger.info("resultUrl:" + resultUrl);
+		return "redirect:" + resultUrl;
+	}
+	
+	@RequestMapping("/commonLogin")
+	@ResponseBody
+	public String commonLogin(String name, String password) {
+		String token = TokenUtils.getToken();
+		String result = null;
+		if (null == token) {
+			if("admin".equals(name) && "museum".equals(password)){
+				result = "index.html";
+			}else{
+				result = "账号或密码错误";
+			}
+		}else{
+			result = "index.html";
+		}
+		return result;
+	}
 }

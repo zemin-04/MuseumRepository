@@ -39,6 +39,13 @@
   <select id="selectThemeRelics" resultMap="TheCulMap">
   	select * from theme t LEFT JOIN culturalrelics cu  on t.theme_id=cu.culturalrelic_themeid ORDER BY t.theme_sort asc
   </select>
+  <select id="selectCulFirstSixAllTheme" resultMap="TheCulMap">
+  	(select * from theme t LEFT JOIN culturalrelics c on t.theme_id = c.culturalrelic_themeid where culturalrelic_themeid = 1 order by culturalrelics_access desc limit 6)
+	union all
+	(select * from theme t LEFT JOIN culturalrelics c on t.theme_id = c.culturalrelic_themeid where culturalrelic_themeid = 2 order by culturalrelics_access desc limit 6)
+	union all
+	(select * from theme t LEFT JOIN culturalrelics c on t.theme_id = c.culturalrelic_themeid where culturalrelic_themeid = 3 order by culturalrelics_access desc limit 6)
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

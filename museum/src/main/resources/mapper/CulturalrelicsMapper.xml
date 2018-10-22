@@ -34,6 +34,39 @@
     from culturalrelics
     where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
   </select>
+  <select id="selectAllCulturalrelics" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from culturalrelics
+  </select>
+  <select id="selectRelicsByThemeId" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from culturalrelics
+    <where> 
+      <if test="themeId != 0">
+        culturalrelic_themeid = #{themeId,jdbcType=INTEGER}
+      </if>
+    </where>
+    order by culturalrelics_access
+    	<choose>
+            <when test="accessSort == 0">
+               desc,
+            </when>
+            <otherwise>
+               asc,
+            </otherwise>
+        </choose>
+        culturalrelics_zan
+        <choose>
+            <when test="zanSort == 0">
+               desc
+            </when>
+            <otherwise>
+               asc
+            </otherwise>
+        </choose>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from culturalrelics
     where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}

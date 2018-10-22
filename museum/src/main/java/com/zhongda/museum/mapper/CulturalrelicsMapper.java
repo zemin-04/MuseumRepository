@@ -69,4 +69,20 @@ public interface CulturalrelicsMapper {
 	 */
 	List<Culturalrelics> selectculturalrelicsByThemeId(
 			@Param(value = "themeId") Integer themeId);
+	
+	/**
+	 * 搜索所有文物
+	 * @return
+	 */
+	List<Culturalrelics> selectAllCulturalrelics();
+	
+	/**
+	 * 根据主题以及访问量和点赞量的顺序查询文物
+	 * @param themeId
+	 * @param accessSort
+	 * @param zanSort
+	 * @return
+	 */
+	List<Culturalrelics> selectRelicsByThemeId(@Param(value = "themeId") Integer themeId,
+			@Param(value = "accessSort")  Integer accessSort, @Param(value = "zanSort")  Integer zanSort);
 }

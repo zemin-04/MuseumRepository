@@ -32,4 +32,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectAllUser();
 	}
 
+	@Override
+	public User findUserById(Integer userid) {
+		return userMapper.selectByPrimaryKey(userid);
+	}
+
 }

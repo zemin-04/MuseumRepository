@@ -25,4 +25,11 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> selectAllUser();
+	
+	/**
+	 * 根据用户id查找用户
+	 * @param userId 
+	 * @return
+	 */
+	User findUserById(Integer userId);
 }

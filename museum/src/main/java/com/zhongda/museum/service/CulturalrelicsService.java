@@ -45,5 +45,20 @@ public interface CulturalrelicsService {
 	 * @return
 	 */
 	List<Culturalrelics> selectculturalrelicsByThemeId(Integer themeId);
+	
+	/**
+	 * 查询所有文物
+	 * @return
+	 */
+	List<Culturalrelics> selectAllCulturalrelics();
+	
+	/**
+	 * 按对应顺序搜索某一主题下的文物
+	 * @param zanSort 点赞顺序（1代表升序，0代表降序）
+	 * @param accessSort 访问量顺序（1代表升序，0代表降序）
+	 * @param themeId 主题id
+	 * @return
+	 */
+	List<Culturalrelics> selectRelicsByThemeId(Integer themeId, Integer accessSort, Integer zanSort);
 
 }

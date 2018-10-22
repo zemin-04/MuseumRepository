@@ -6,6 +6,7 @@
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="culturalrelics_id" jdbcType="INTEGER" property="culturalrelicsId" />
     <result column="access_time" jdbcType="TIMESTAMP" property="accessTime" />
+    <result column="access_number" jdbcType="TIMESTAMP" property="accessNumber" />
   </resultMap>
   <sql id="Base_Column_List">
     access_id, openid, culturalrelics_id, access_time
@@ -15,6 +16,14 @@
     <include refid="Base_Column_List" />
     from access
     where access_id = #{accessId,jdbcType=INTEGER}
+  </select>
+  <select id="countAccess" resultMap="BaseResultMap">
+  	select 
+ 	a.access_time, count(a.access_id) access_number
+  	from
+	 (select DATE(access_time) access_time, access_id from access where culturalrelics_id = #{culturalrelicsId,jdbcType=INTEGER}
+	  and access_time between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP}) a
+		 GROUP BY a.access_time
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from access

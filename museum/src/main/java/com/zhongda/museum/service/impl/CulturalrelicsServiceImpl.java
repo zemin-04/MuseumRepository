@@ -68,4 +68,18 @@ public class CulturalrelicsServiceImpl implements CulturalrelicsService {
 	public List<Culturalrelics> selectculturalrelicsByThemeId(Integer themeId) {
 		return culturalrelicsMapper.selectculturalrelicsByThemeId(themeId);
 	}
+
+	@Override
+	public List<Culturalrelics> selectAllCulturalrelics() {
+		List<Culturalrelics> culturalrelicsList = culturalrelicsMapper.selectAllCulturalrelics();
+		return culturalrelicsList;
+	}
+
+	@Override
+	public List<Culturalrelics> selectRelicsByThemeId(Integer themeId,
+			Integer accessSort, Integer zanSort) {
+		List<Culturalrelics> culturalrelicsList = culturalrelicsMapper.selectRelicsByThemeId(themeId, accessSort, zanSort);
+		return culturalrelicsList;
+	}
+
 }

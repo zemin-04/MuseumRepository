@@ -26,4 +26,10 @@ public interface ThemeService {
 	 * @return
 	 */
 	List<Theme> selectThemeRelics();
+	
+	/**
+	 * 查询每个展厅下的访问量排名前六的文物
+	 * @return
+	 */
+	List<Theme> selectCulFirstSixAllTheme();
 }
